@@ -1,0 +1,507 @@
+/* Table of content
+-----------------------------------------------
+1. Global
+2. Content
+3. Post styling
+4. Singe Post/Page Pagination
+5. Media
+7. Buttons
+8. Custom Styles
+9. Header and top navigation
+10. Content
+11. Attachment styling
+12. Gallery
+13. Footer
+14. Social icons
+15. Call For Action
+*/
+
+/* =Global
+----------------------------------------------- */
+body {
+	color: #6B6B6B;
+	background-color: #F2F2F2;
+	word-wrap: break-word;
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.7;
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: #DA4453;
+	text-decoration: none;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	  transition: all 0.3s;
+}
+
+a:hover,
+a:focus {
+	color: #DADADA;
+	text-decoration: none;
+}
+
+a:focus {
+	outline: thin dotted;
+	outline-offset: -2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	/*color: #DA4453;*/
+	color: #444;
+	font-weight: 700;
+}
+h1 {
+  font-size: 28px;
+}
+h2 {
+  font-size: 24px;
+}
+h3 {
+  font-size: 20px;
+}
+h4{
+  font-size: 16px;
+}
+h5 {
+  font-size: 14px;
+}
+h6 {
+  font-size: 13px;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	color: #444;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+	color: #44B70E;
+}
+
+img {
+  height: auto; /* Make sure images are scaled correctly. */
+  max-width: 100%; /* Adhere to container width. */
+}
+button,
+input,
+select,
+textarea {
+	font-size: 100%; /* Corrects font size not being inherited in all browsers */
+	margin: 0; /* Addresses margins set differently in IE6/7, F3/4, S5, Chrome */
+	vertical-align: baseline;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  padding: 0; /* Addresses excess padding in IE8/9 */
+}
+input[type="search"] {
+	-webkit-appearance: textfield; /* Addresses appearance set to searchfield in S5, Chrome */
+	-webkit-box-sizing: content-box; /* Addresses box sizing set to border-box in S5, Chrome (include -moz to future-proof) */
+	-moz-box-sizing:  content-box;
+	box-sizing:     content-box;
+}
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+textarea {
+	color: #666;
+	border: 1px solid #E8E8E8;
+	border-radius: 3px;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+  color: #111;
+}
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"] {
+  padding: 3px;
+}
+textarea {
+  overflow: auto; /* Removes default vertical scrollbar in IE6/7/8/9 */
+  padding-left: 3px;
+  vertical-align: top; /* Improves readability and alignment in all browsers */
+  width: 100%;
+}
+
+/* Alignment */
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.5em;
+}
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.5em;
+}
+.aligncenter {
+	clear: both;
+	display: block;
+	margin: 0 auto;
+}
+
+/* Text meant only for screen readers */
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+}
+
+.screen-reader-text:hover,
+.screen-reader-text:active,
+.screen-reader-text:focus {
+	background-color: #f1f1f1;
+	border-radius: 3px;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+	clip: auto !important;
+	color: #21759b;
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	height: auto;
+	left: 5px;
+	line-height: normal;
+	padding: 15px 23px 14px;
+	text-decoration: none;
+	top: 5px;
+	width: auto;
+	z-index: 100000; /* Above WP toolbar */
+}
+
+/* =Media
+----------------------------------------------- */
+.single-featured {
+	-webkit-transition: opacity 0.3s linear;
+	-moz-transition: opacity 0.3s linear;
+	-o-transition: opacity 0.3s linear;
+	transition: opacity 0.3s linear;
+	display: block;
+	margin: auto;
+}
+.single-featured:hover {
+	opacity: 0.8;
+}
+.wp-caption {
+	border: 1px solid #ccc;
+	margin-bottom: 1.5em;
+	max-width: 100%;
+}
+.wp-caption img[class*="wp-image-"] {
+	display: block;
+}
+.wp-caption-text {
+	text-align: center;
+}
+.wp-caption .wp-caption-text {
+	margin: 0.8075em 0;
+}
+
+/* Make sure embeds and iframes fit their containers */
+embed,
+iframe,
+object {
+	max-width: 100%;
+}
+
+.block {
+	background-color: #fff;
+	color: #0A0A0A;
+	padding: 30px;
+	border: 1px solid #DADADA;
+	border-radius: 4px;
+	overflow: hidden;
+	clear: both;
+	margin: 40px 0;
+}
+
+/* =Buttons
+----------------------------------------------- */
+
+.sub-nav{
+	display: block;
+	clear: both;
+	padding: 2em 0;
+}
+
+a.button {
+	display: inline-block;
+	background-color: #DA4453;
+	border: 1px solid #DA4453;
+	padding: 0.8em 1em;
+	margin: 2em 0;
+	overflow: hidden;
+	border-radius: 4px;
+	-webkit-transition: background-color 0.3s linear;
+	-moz-transition: background-color 0.3s linear;
+	-o-transition: background-color 0.3s linear;
+	transition: background-color 0.3s linear;
+}
+a.button:hover {
+	background-color: #363636;
+	border-color: #333;
+}
+a.button {
+	color: #FFF;
+	text-transform: uppercase;
+}
+
+/* =Header
+----------------------------------------------- */
+#masthead{
+	background:#335A05;
+}
+.row{
+	display: block;
+	max-width: 1140px;
+	padding: 0 15px;
+	margin: 0 auto;
+}
+#menu {
+	position: relative;
+	text-transform: uppercase;
+	position: relative;
+	padding: 0 24px;
+	overflow: hidden !important;
+}
+#logo{
+	height: 76px;
+}
+#logo img{
+	max-width: 75%;
+	height: auto;
+}
+#menu ul{
+	position: absolute;
+	top: 16px;
+	right: 40px;
+	list-style-type: none;
+	padding: 0;
+	font-size: 12px;
+}
+
+#menu li{
+	display: inline;
+}
+#menu ul a{
+	color: #fff;
+	text-decoration: none;
+	padding: 16px 14px;
+}
+#menu a:hover {
+	color: #44B70E;
+}
+a#menubutton {
+	display: none;
+}
+
+/* =Page
+----------------------------------------------- */
+#map {
+	width: 100%;
+	height: 600px;
+}
+
+/* =Footer
+----------------------------------------------- */
+#colophon {
+	background-color: #1F1F1F;
+	padding: 10px 0;
+	border-top: 1px solid #3A3A3A;
+	font-size: 12px;
+	color: #999;
+	height: 120px;
+}
+#colophon a {
+	color: #ccc;
+}
+#colophon a:hover {
+	color: #fff;
+}
+
+#colophon ul{
+	text-align: center;
+}
+
+#colophon li{
+	line-height: 2;
+	padding: 0 10px 10px 10px;
+}
+
+#colophon li a{
+	text-transform: uppercase;
+}
+#colophon ul.sub-menu li a{
+	text-transform: capitalize !important;
+}
+.half{
+	width: 50%;
+	float: left;
+}
+
+.footer-nav.nav > li {
+	position: relative;
+	display: inline-block;
+}
+.copyright {
+	display: block;
+	margin-top: 10px;
+	text-align: center;
+}
+.scroll-to-top {
+	background: #363636;
+	background: rgba(100, 100, 100, 0.4);
+	color: #FFF;
+	bottom: 4%;
+	cursor: pointer;
+	display: none;
+	position: fixed;
+	right: 20px;
+	z-index: 999;
+	font-size: 16px;
+	text-align: center;
+	line-height: 40px;
+	width: 40px;
+	border-radius: 4px;
+	-webkit-transition: background-color 0.3s linear;
+	-moz-transition: background-color 0.3s linear;
+	-o-transition: background-color 0.3s linear;
+	transition: background-color 0.3s linear;
+}
+.scroll-to-top:hover {
+	background: #DA4453;
+	opacity: .8;
+}
+
+a#facebook {
+	display: block;
+	margin: 0 auto;
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	background: #333 url('../images/facebook.png') no-repeat 50% 50%;
+	background: #333 url('../images/facebook.svg') no-repeat 50% 50%;
+	-webkit-transition: background-color  0.5s;
+	-moz-transition: background-color  0.5s;
+	-o-transition: background-color  0.5s;
+	transition: background-color  0.5s;
+}
+a#facebook:hover {
+	background-color: #4265b9 !important;
+}
+
+/* =Elements when no javaScript is present
+----------------------------------------------- */
+#submit,
+.tagcloud,
+.comment-reply-link,
+button,
+.widget_rss ul,
+button[type=submit],
+.postform,
+table#wp-calendar {
+  display: none;
+}
+.no-js #submit,
+.no-js button,
+.no-js .widget_rss ul,
+button[type=submit] {
+	display: block;
+}
+
+/* ============================= variant styles for screen widths ============================= */
+@-ms-viewport {
+	width: device-width;
+}
+@viewport {
+	width: device-width;
+}
+@media screen and (min-width: 771px) {
+	/*ensure menu is displayed if screen is re-sized*/
+	#menuitems{
+		display: block;
+	}
+}
+
+@media screen and (max-width: 770px) {
+	#masthead{
+		height: auto;
+	}
+	#menu {
+		padding: 0 15px;
+		margin: 0;
+	}
+	#menuitems{
+		display: none;
+	}
+	#menuitems ul{
+		width: 100%;
+		position: relative;
+		top:-12px; left: 0;
+		display: block;
+		border-top: 1px solid #fff;
+	}
+	#menu li{
+		display: block;
+		padding: 10px 0;
+	}
+	a#menubutton {
+		display: block;
+		position: absolute;
+		top: 1em;
+		right: 2em;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+		text-decoration: none;
+		color: #006;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		background: transparent url('../images/menu.png') no-repeat 50% 50%;
+		background: transparent url('../images/menu.svg') no-repeat 50% 50%;
+		-webkit-transition: border  0.5s;
+		-moz-transition: border  0.5s;
+		-o-transition: border  0.5s;
+		transition-property: border;
+		transition-duration:  0.5s;
+	}
+	a#menubutton:hover {
+		border: 1px solid #44B70E;
+		background: transparent url('../images/menu-grn.png') no-repeat 50% 50%;
+		background: transparent url('../images/menu-grn.svg') no-repeat 50% 50%;
+	}
+	#colophon{
+		height: auto;
+	}
+	.half {
+		float: none;
+		height: auto;
+		width: 100%;
+	}
+}
+@media screen and (max-width: 450px) {
+	#logo img{
+		margin-top: 5px;
+	}
+}
+@media screen and (max-width: 400px) {
+	#logo img{
+		margin-top: 10px;
+	}
+}
+@media screen and (max-width: 350px) {
+	#logo img{
+		margin-top: 15px;
+	}
+}
