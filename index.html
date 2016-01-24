@@ -1,259 +1,848 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>QGIS2leaf webmap</title>
-		<meta charset="utf-8" />
-		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-		<link rel="stylesheet" type="text/css" href="css/own_style.css">
-		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-		<script src="js/leaflet-hash.js"></script>
-		<script src="js/Autolinker.min.js"></script>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-		<link rel="stylesheet" href="css/uad.css" type="text/css" media="all">
-		<link rel="stylesheet" href="css/leaflet-search.css" />
-		<script src="js/leaflet-search.min.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/fuse.js/1.2.2/fuse.min.js"></script>
-		<link rel="stylesheet" href="css/leaflet-layer-tree-control.css"/>
-		<script type="text/javascript" src="js/leaflet-layer-tree-control.js"></script>
-		<script type="text/javascript">
-		<!--
-			jQuery(document).ready(function(){jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery(".scroll-to-top").fadeIn()}else{jQuery(".scroll-to-top").fadeOut()}});jQuery(".scroll-to-top").click(function(){jQuery("html, body").animate({scrollTop:0},800);return false})})
-			
-			function menutoggle(){
-				$('#menuitems').toggle(500);
-				var menuon=document.getElementById("#menuitems").style.display;
-				if(menuon=="none"){
-					document.getElementById("menu").style.border = "none";
-				}
-			}
-			
-			function clearcookiedisplay(){
-				$('#cookies').hide(500);
-			}
-		-->
-		</script>
-		<noscript>
-		<style type="text/css">
-		@media screen and (max-width: 770px) {
-			#logo img{
-				max-width: 100%;
-			}
-			#menuitems{
-				display: block;
-			}
-			a#menubutton {
-				display: none;
-			}
-		}
-		</style>
-		</noscript>
-	</head>
-	<body class="home blog">
-		<div id="page" class="hfeed site">
-		<header id="masthead" class="site-header" role="banner">
-			<div class="row" id="menu">
-				<div id="logo">
-					<a href="http://beyondthecastle.org/"><img src="./images/btc_header2.gif" alt="Beyond The Castle" height="76" width="379"></a>
-				</div><!-- end of #logo -->
-				<div id="menuitems">
-					<ul>
-					<li><a title="Home" href="http://beyondthecastle.org/">Home</a></li>
-					<li><a title="About the Project" href="http://beyondthecastle.org/about/">About the Project</a></li>
-					<li><a title="Contact" href="http://beyondthecastle.org/contact/">Contact</a></li>
-					</ul>
-				</div>
-				<a id="menubutton" onclick="menutoggle()" title="Toggle menu display."></a>
-				
-			</div>
-		</header><!-- #masthead -->
 
-		<div id="content" class="row">
-			
-			<div class="block">
-				<div id="map"></div>
-				<div class="sub-nav">
-					<a href="./" class="button">Help using the map</a>
-				</div><!-- sub-nav -->
-			
-			</div><!-- block -->
+   <html>
+<head>
+  <title>UAD webmap</title>
 
-		</div><!-- close .main-content -->
-				<script>
-					var map = L.map('map', {
-						zoomControl:true, maxZoom:19
-					}).fitBounds([[54.0431212658,-2.82615556208],[54.0574685136,-2.78264763832]]);
-					var hash = new L.Hash(map);
-					var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
-					var feature_group = new L.featureGroup([]);
-					var raster_group = new L.LayerGroup([]);
-					var basemap_0 = L.tileLayer('http://a.tile.stamen.com/toner/{z}/{x}/{y}.png', { 
-						attribution: additional_attrib + 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-					});	
-					basemap_0.addTo(map);	
-					var layerOrder=new Array();
-					
-					var overlay_Baines1824 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
-						layers: 'Baines1824',
-						format: 'image/png',
-						transparent: true,
-						continuousWorld : true,
-					}).addTo(map);
+  <meta charset="UTF-8">
 
-					var overlay_Clarke1807 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
-						layers: 'Clarke1807',
-						format: 'image/png',
-						transparent: true,
-						continuousWorld : true,
-					}).addTo(map);
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- leaflet -->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css"/>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 
-					var overlay_Mackreth1778 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
-						layers: 'Mackreth1778',
-						format: 'image/png',
-						transparent: true,
-						continuousWorld : true,
-					}).addTo(map);
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/uad.css" type="text/css" media="all">
 
-					var overlay_Docton1684 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
-						layers: 'Docton1684',
-						format: 'image/png',
-						transparent: true,
-						continuousWorld : true,
-					}).addTo(map);
+  <link rel="stylesheet" href="css/leaflet-layer-tree-control.css"/>
+  <script type="text/javascript" src="js/leaflet-layer-tree-control.js"></script>
+  <script type="text/javascript" src="js/leaflet-layer-tree-control-wfs-zoom.js"></script>
+  <script src="js/leaflet-hash.js"></script>
+  <link rel="stylesheet" href="css/leaflet-search.css" />
+  <script src="js/leaflet-search.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/fuse.js/1.2.2/fuse.min.js"></script>
+  <script type="text/javascript">
+  <!--
+    jQuery(document).ready(function(){jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery(".scroll-to-top").fadeIn()}else{jQuery(".scroll-to-top").fadeOut()}});jQuery(".scroll-to-top").click(function(){jQuery("html, body").animate({scrollTop:0},800);return false})})
+    
+    function menutoggle(){
+      $('#menuitems').toggle(500);
+      var menuon=document.getElementById("#menuitems").style.display;
+      if(menuon=="none"){
+        document.getElementById("menu").style.border = "none";
+      }
+    }
+    
+    function clearcookiedisplay(){
+      $('#cookies').hide(500);
+    }
+  -->
+  </script>
+  <noscript>
+  <style type="text/css">
+  @media screen and (max-width: 770px) {
+    #logo img{
+      max-width: 100%;
+    }
+    #menuitems{
+      display: block;
+    }
+    a#menubutton {
+      display: none;
+    }
+  }
+  </style>
+  </noscript>
 
-					var overlay_OS_1_25 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
-						layers: 'OS First Edition 25 inch',
-						format: 'image/png',
-						transparent: true,
-						continuousWorld : true,
-					}).addTo(map);
+</head> 
+  <body class="home blog">
+    <div id="page" class="hfeed site">
+    <header id="masthead" class="site-header" role="banner">
+      <div class="row" id="menu">
+        <div id="logo">
+          <a href="http://beyondthecastle.org/"><img src="./images/btc_header2.gif" alt="Beyond The Castle" height="76" width="379"></a>
+        </div><!-- end of #logo -->
+        <div id="menuitems">
+          <ul>
+          <li><a title="Home" href="http://beyondthecastle.org/">Home</a></li>
+          <li><a title="About the Project" href="http://beyondthecastle.org/about/">About the Project</a></li>
+          <li><a title="Contact" href="http://beyondthecastle.org/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <a id="menubutton" onclick="menutoggle()" title="Toggle menu display."></a>
+        
+      </div>
+    </header><!-- #masthead -->
 
-					var uadlistedpolysURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:listed_polys&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadlistedpolysJson';
-					uadlistedpolysURL=uadlistedpolysURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
-					var exp_uadlistedpolysJSON = L.geoJson(null, {
-						style: function (feature) {
-							return {
-								color: '#000000',
-								fillColor: '#d4a777',
-								weight: 1.3,
-								dashArray: '',
-								opacity: 1.0,
-								fillOpacity: 1.0
-							};
+    <div id="content" class="row">
+      
+      <div class="block">
+        <div id="map"></div>
+        <div class="sub-nav">
+          <a href="./" class="button">Help using the map</a>
+        </div><!-- sub-nav -->
+      
+      </div><!-- block -->
 
-						},
-						onEachFeature: function (feature, layer){					
-						var popupContent = '<table><tr><th scope="row">gid</th><td>' + Autolinker.link(String(feature.properties['gid'])) + '</td></tr><tr><th scope="row">id</th><td>' + Autolinker.link(String(feature.properties['id'])) + '</td></tr><tr><th scope="row">eventid</th><td>' + Autolinker.link(String(feature.properties['eventid'])) + '</td></tr><tr><th scope="row">monumentid</th><td>' + Autolinker.link(String(feature.properties['monumentid'])) + '</td></tr><tr><th scope="row">name</th><td>' + Autolinker.link(String(feature.properties['name'])) + '</td></tr><tr><th scope="row">field1</th><td>' + Autolinker.link(String(feature.properties['field1'])) + '</td></tr></table>';
-						layer.bindPopup(popupContent);
-						}
-					});
-					layerOrder[layerOrder.length] = exp_uadlistedpolysJSON;
-					var uadlistedpolysajax = $.ajax({
-						url : uadlistedpolysURL,
-						dataType : 'jsonp',
-						jsonpCallback : 'getuadlistedpolysJson',
-						contentType : 'application/json',
-						success : function (response) {
-							L.geoJson(response, {
-								onEachFeature: function (feature, layer) {
-									exp_uadlistedpolysJSON.addData(feature)
-								}
-							});
-							for (index = 0; index < layerOrder.length; index++) {
-								feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
-							}
-						}
-					});
-					//add comment sign to hide this layer on the map in the initial view.
-					feature_group.addLayer(exp_uadlistedpolysJSON);
+    </div><!-- close .main-content -->
+<script type="text/javascript">
+          var map = L.map('map', {
+            zoomControl:true, maxZoom:19
+          }).fitBounds([[54.0431212658,-2.82615556208],[54.0574685136,-2.78264763832]]);
+          var hash = new L.Hash(map);
+          var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
 
-					var uadhumanreadableimagesURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:human_readable_images&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadhumanreadableimagesJson';
-					uadhumanreadableimagesURL=uadhumanreadableimagesURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
-					var exp_uadhumanreadableimagesJSON = L.geoJson(null, {
-						pointToLayer: function (feature, latlng) {  
-							return L.circleMarker(latlng, {
-								radius: 4.0,
-								fillColor: '#758410',
-								color: '#000000',
-								weight: 1,
-								opacity: 1.0,
-								fillOpacity: 1.0
-							})
-						},
-						onEachFeature: function (feature, layer) {					
-						var popupContent = '<table><tr><th scope="row">UADImageReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADImageReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
-						layer.bindPopup(popupContent);
-						}
-					});
-					layerOrder[layerOrder.length] = exp_uadhumanreadableimagesJSON;
-					var uadhumanreadableimagesajax = $.ajax({
-						url : uadhumanreadableimagesURL,
-						dataType : 'jsonp',
-						jsonpCallback : 'getuadhumanreadableimagesJson',
-						contentType : 'application/json',
-						success : function (response) {
-							L.geoJson(response, {
-								onEachFeature: function (feature, layer) {
-									exp_uadhumanreadableimagesJSON.addData(feature)
-								}
-							});
-							for (index = 0; index < layerOrder.length; index++) {
-								feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
-							}
-						}
-					});
-					//add comment sign to hide this layer on the map in the initial view.
-					feature_group.addLayer(exp_uadhumanreadableimagesJSON);
+  var tree = [  // start tree
+    {
+      "code": "root",
+      "name": "Layers",
+      "active": true,
+      "selectedByDefault": false,
+      "openByDefault": true,
+      "childLayers": [ //start root child layers
+        { // start base node
+          "code": "base",
+          "name": "Base Maps",
+          "active": true,
+          "selectedByDefault": false,
+          "openByDefault": true,
+          "parent": {
+            "code": null,
+            "name": null,
+            "active": true,
+            "selectedByDefault": false,
+            "openByDefault": true,
+            "childLayers": [],
+            "selectType": null,
+            "serviceType": null,
+            "params": {}
+            }, // end base node
+        "childLayers": [ // start base child layers
+          { // start stamen node
+            "code": "stamen",
+            "name": "Stamen Toner",
+            "active": true,
+            "selectedByDefault": true,
+            "openByDefault": true,
+            "parent": {
+              "code": null,
+              "name": null,
+              "active": true,
+              "selectedByDefault": false,
+              "openByDefault": true,
+              "childLayers": [],
+              "selectType": null,
+              "serviceType": null,
+              "params": {}
+              },
+            "childLayers": [],
+            "selectType": "NONE",
+            "serviceType": "OSM",
+            "params": {
+              "url": "http://a.tile.stamen.com/toner/{z}/{x}/{y}.png"
+            }
+          } // end stamen node
+             ], // end base child layers
+            "selectType": "SINGLE",
+            "serviceType": null,
+            "params": {}
+          }, // end base 
+          { // start overlays
+            "code": "overlays",
+            "name": "Overlay Layers",
+            "active": true,
+            "selectedByDefault": false,
+            "openByDefault": true,
+            "parent": {  // start parent
+              "code": null,
+              "name": null,
+              "active": true,
+              "selectedByDefault": false,
+              "openByDefault": true,
+              "childLayers": [],
+              "selectType": null,
+              "serviceType": null,
+              "params": {}
+              }, // end parent
+              "childLayers": [
+                      {
+                        "code": "historicmaps",
+                        "name": "Historic Maps of Lancaster",
+                        "active": true,
+                        "selectedByDefault": true,
+                        "openByDefault": true,
+                        "parent": {
+                          "code": null,
+                          "name": null,
+                          "active": true,
+                          "selectedByDefault": false,
+                          "openByDefault": true,
+                          "childLayers": [],
+                          "selectType": null,
+                          "serviceType": null,
+                          "params": {}
+                        },
+           "childLayers": [ // start overlays list
+              {  // start node
+                "code": "baines1824",
+                "name": "Baines's Map of 1824",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WMS",
+                "params": { // start wms parameters
+                    "service": "WMS",
+                    "format": "image/png",
+                    "layers": "Baines1824",
+                    "version": "1.1.0",
+                    "url": "http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0",
+                    "transparent": "TRUE"
+                } // end wms parameters
+              },
+              {  // start node
+                "code": "docton1684",
+                "name": "Docton's  Map of 1684",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WMS",
+                "params": { // start wms parameters
+                    "service": "WMS",
+                    "format": "image/png",
+                    "layers": "Docton",
+                    "version": "1.1.0",
+                    "url": "http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0",
+                    "transparent": "TRUE"
+                } // end wms parameters
+              }, // end node
+              {  // start node
+                "code": "clarke1807",
+                "name": "Clarke's  Map of 1807",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WMS",
+                "params": { // start wms parameters
+                    "service": "WMS",
+                    "format": "image/png",
+                    "layers": "Clarke1807",
+                    "version": "1.1.0",
+                    "url": "http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0",
+                    "transparent": "TRUE"
+                } // end wms parameters
+              }, // end node
+              {  // start node
+                "code": "mackreth1778",
+                "name": "Mackreth's Map of 1778",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WMS",
+                "params": { // start wms parameters
+                    "service": "WMS",
+                    "format": "image/png",
+                    "layers": "Mackreth1778",
+                    "version": "1.1.0",
+                    "url": "http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0",
+                    "transparent": "TRUE"
+                } // end wms parameters
+              }, // end node
+              {  // start node
+                "code": "OS_1_25",
+                "name": "Ordnance Survey First Edition 25 inch",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WMS",
+                "params": { // start wms parameters
+                    "service": "WMS",
+                    "format": "image/png",
+                    "layers": "OS First Edition 25 inch",
+                    "version": "1.1.0",
+                    "url": "http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0",
+                    "transparent": "TRUE"
+                } // end wms parameters
+              } // end node
+          ], // end overlays list
+          "selectType": "MULTIPLE",
+          "serviceType": null,
+          "params": {}
+        },  // end historic map overlays
+        { // start monuments overlays copy from here
+          "code": "monuments",
+          "name": "Historic Monuments",
+          "active": true,
+          "selectedByDefault": true,
+          "openByDefault": true,
+          "parent": {
+            "code": null,
+            "name": null,
+            "active": true,
+            "selectedByDefault": false,
+            "openByDefault": true,
+            "childLayers": [],
+            "selectType": null,
+            "serviceType": null,
+            "params": {}
+          },
+           "childLayers": [ // start overlays list
+              {  // start node
+                "code": "prehistoric",
+                "name": "Prehistoric Monuments",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:prehistoric_polygons",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "prehistoric_points",
+                "name": "Prehistoric Point Finds",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:Prehistoric",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+              {  // start node
+                "code": "roman",
+                "name": "Roman Monuments",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:roman_polygons",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "roman",
+                "name": "Roman Point Finds",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:roman_monuments",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+              {  // start node
+                "code": "earlymed",
+                "name": "Early Medieval Monuments",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:early-medieval_polygons",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "earlymedpoints",
+                "name": "Early Medieval Point Finds",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:early-medieval-points",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "latemed",
+                "name": "Late Medieval Monuments",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:late-medieval_polygons",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "latemedpoints",
+                "name": "Late Medieval Point Finds",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:late-medieval-points",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "postmed",
+                "name": "Post-Medieval Monuments",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:post-medieval_polygons",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+               {  // start node
+                "code": "postmedpoints",
+                "name": "Post-Medieval Point Finds",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:post-medieval-points",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+              {  // start node
+                "code": "unknown",
+                "name": "Monuments of Unknown Period",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:unknown-period_polygons",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              }, // end node
+          ], // end overlays list
+          "selectType": "MULTIPLE",
+          "serviceType": null,
+          "params": {}
+        },  // end monument overlays end copy here
+        { // start monuments overlays copy group from here
+          "code": "events",
+          "name": "Digs and Surveys",
+          "active": true,
+          "selectedByDefault": true,
+          "openByDefault": true,
+          "parent": {
+            "code": null,
+            "name": null,
+            "active": true,
+            "selectedByDefault": false,
+            "openByDefault": true,
+            "childLayers": [],
+            "selectType": null,
+            "serviceType": null,
+            "params": {}
+          },
+           "childLayers": [ // start overlays list
+              {  // start node copy layer from here
+                "code": "digs",
+                "name": "Archaeological Investigations",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:human_readable_events",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0"
+                  } // end wfs parameters
+              },
+              {  // start node copy layer from here
+                "code": "pics",
+                "name": "Paintings and Photos",
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "parent": { // start parent
+                  "code": null,
+                  "name": null,
+                  "active": true,
+                  "selectedByDefault": false,
+                  "openByDefault": true,
+                  "childLayers": [],
+                  "selectType": null,
+                  "serviceType": null,
+                  "params": {}
+                 }, // end parent
+                "childLayers": [],
+                "selectType": "SINGLE",
+                "serviceType": "WFS",
+                "params": { //start wfs parameters
+                  "request": "getFeature",
+                  "service": "WFS",
+                  "typeName": "uad:human_readable_images",
+                  "version": "1.0.0",
+                  "outputFormat": "application/json",
+                  "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0",
+                  "style": "{\"stroke\":true,\"fillColor\":\"#758410\",\"color\":\"#000000\",\"border\":\"#000000\",\"dashArray\":\"5\",\"weight\":1.3,\"opacity\":0.5,\"fillOpacity\":0.1}",
+                  } // end wfs parameters
+              },
+             {  // start node
+              "code": "listedpolys",
+              "name": "Listed Buildings Outlines",
+              "active": true,
+              "selectedByDefault": false,
+              "openByDefault": true,
+              "parent": { // start parent
+                "code": null,
+                "name": null,
+                "active": true,
+                "selectedByDefault": false,
+                "openByDefault": true,
+                "childLayers": [],
+                "selectType": null,
+                "serviceType": null,
+                "params": {}
+               }, // end parent
+              "childLayers": [],
+              "selectType": "SINGLE",
+              "serviceType": "WFS",
+              "params": { //start wfs parameters
+                "request": "getFeature",
+                "service": "WFS",
+                "typeName": "uad:listed_polys",
+                "version": "1.0.0",
+                "outputFormat": "application/json",
+                "url": "proxy?http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0",
+                "style": "{\"stroke\":true,\"fillColor\":\"#d4a777\",\"color\":\"#000000\",\"border\":\"#000000\",\"dashArray\":\"5\",\"weight\":1.3,\"opacity\":0.5,\"fillOpacity\":0.1}",
+                } // end wfs parameters
+            } // end node
+          ], // end overlays list
+          "selectType": "MULTIPLE",
+          "serviceType": null,
+          "params": {}
+        }  // end monument overlays end group copy here
 
-					feature_group.addTo(map);
-					var title = new L.Control();
-					title.onAdd = function (map) {
-						this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-						this.update();
-						return this._div;
-					};
-					title.update = function () {
-						this._div.innerHTML = '<h2>Lancaster Urban Archaeological Database</h2>Interactive Map'
-					};
-					title.addTo(map);
-				var baseMaps = {
-					'Stamen Toner': basemap_0
-				};
-					L.control.layers(baseMaps,{"uadhumanreadableimages": exp_uadhumanreadableimagesJSON,"uadlistedpolys": exp_uadlistedpolysJSON,"Baines' Map of 1824": overlay_Baines1824, "Clarke's Map of 1807": overlay_Clarke1807, "Mackreth's Map of 1778": overlay_Mackreth1778, "Docton's Map of 1684": overlay_Docton1684, "Ordnance Survey First Edition 25inch": overlay_OS_1_25},{collapsed:false}).addTo(map);
-					L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
+        ], // end overlays list
+          "selectType": "NONE",
+          "serviceType": null,
+          "params": {}
+        }  // end overlays
+      ], // end layers list
+      "selectType": "NONE",
+      "serviceType": null,
+      "params": {}
+    }
+  ]; // end tree
 
+  new L.Control.LayerTreeControl({  layerTree: tree,
+            openByDefault: true,
+            featureBuilders: {
+              WFS: {
+                zoom: L.Control.LayerTreeControl.WFSZoomFeature
+                  }
+            }
+          }).addTo(map);
 
-				var controlSearch = new L.Control.Search({layer: exp_uadhumanreadableimagesJSON, initial: true, propertyName:'UADImageReferenceNumber'});
+  var controlSearch = new L.Control.Search({layer:'pics', initial: true, propertyName:'UADImageReferenceNumber'});
 
-				map.addControl( controlSearch );
-			</script>
+  map.addControl( controlSearch );
 
-
+</script>
 <footer id="colophon" class="site-footer" role="contentinfo">
-	<div class="row">
-		<a id="facebook"></a>			
-		
-		<nav role="navigation">
-			<div class="half">
-				<ul id="menu-footer-menu" class="nav footer-nav clearfix">
-				<li id="menu-item-145" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-145"><a href="http://beyondthecastle.org/">Home</a></li>
-				<li id="menu-item-149" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-149"><a href="http://beyondthecastle.org/what-you-can-do-to-help/">What You Can Do To Help</a>
-				<ul class="sub-menu">
-					<li id="menu-item-150" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-150"><a href="http://beyondthecastle.org/get-involved-2/">Get Involved</a></li>
-				</ul>
-				</li>
-				<li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="http://beyondthecastle.org/contact/">Contact</a></li>
-				</ul>
-			</div>
-			<div class="half">
-				<div class="copyright"><a href="http://beyondthecastle.org/wordpress/" title="Beyond The Castle">Beyond The Castle</a>  All rights reserved.</div>
-			</div>
-			
-		</nav>
-	</div>
-	<div style="display: none;" class="scroll-to-top">&#094;</div><!-- .scroll-to-top -->
-	
+  <div class="row">
+    <a id="facebook"></a>     
+    
+    <nav role="navigation">
+      <div class="half">
+        <ul id="menu-footer-menu" class="nav footer-nav clearfix">
+        <li id="menu-item-145" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-145"><a href="http://beyondthecastle.org/">Home</a></li>
+        <li id="menu-item-149" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-149"><a href="http://beyondthecastle.org/what-you-can-do-to-help/">What You Can Do To Help</a>
+        <ul class="sub-menu">
+          <li id="menu-item-150" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-150"><a href="http://beyondthecastle.org/get-involved-2/">Get Involved</a></li>
+        </ul>
+        </li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="http://beyondthecastle.org/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="half">
+        <div class="copyright"><a href="http://beyondthecastle.org/wordpress/" title="Beyond The Castle">Beyond The Castle</a>  All rights reserved.</div>
+      </div>
+      
+    </nav>
+  </div>
+  <div style="display: none;" class="scroll-to-top">&#094;</div><!-- .scroll-to-top -->
+  
 </footer><!-- #colophon -->
 
 <!-- #page -->
