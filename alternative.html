@@ -102,6 +102,11 @@
     var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
     var feature_group = new L.featureGroup([]);
     var raster_group = new L.LayerGroup([]);
+    var prehistoric_group = new L.LayerGroup([]);
+    var roman_group = new L.LayerGroup([]);
+    var earlymed_group = new L.LayerGroup([]);
+    var latemed_group = new L.LayerGroup([]);
+    var postmed_group = new L.LayerGroup([]);
     var basemap_0 = L.tileLayer('http://a.tile.stamen.com/toner/{z}/{x}/{y}.png', { 
       attribution: additional_attrib + 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
     }); 
@@ -112,31 +117,33 @@
       format: 'image/png',
       transparent: true,
       continuousWorld : true,
-    }).addTo(map);
+    });
     var overlay_Clarke = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
       layers: 'Clarke1807',
       format: 'image/png',
       transparent: true,
       continuousWorld : true,
-    }).addTo(map);
+    });
     var overlay_Docton1684 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
       layers: 'Docton1684',
       format: 'image/png',
       transparent: true,
       continuousWorld : true,
-    }).addTo(map);
+    });
     var overlay_Mackreth1778 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
       layers: 'Mackreth1778',
       format: 'image/png',
       transparent: true,
       continuousWorld : true,
-    }).addTo(map);
+    });
     var overlay_OSFirstEdition25inch = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
       layers: 'OS First Edition 25 inch',
       format: 'image/png',
       transparent: true,
       continuousWorld : true,
-    }).addTo(map);
+    });
+
+
 
     var listedpolysURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:listed_polys&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetlistedpolysJson';
     listedpolysURL=listedpolysURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -153,7 +160,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">gid</th><td>' + Autolinker.link(String(feature.properties['gid'])) + '</td></tr><tr><th scope="row">id</th><td>' + Autolinker.link(String(feature.properties['id'])) + '</td></tr><tr><th scope="row">eventid</th><td>' + Autolinker.link(String(feature.properties['eventid'])) + '</td></tr><tr><th scope="row">monumentid</th><td>' + Autolinker.link(String(feature.properties['monumentid'])) + '</td></tr><tr><th scope="row">name</th><td>' + Autolinker.link(String(feature.properties['name'])) + '</td></tr><tr><th scope="row">field1</th><td>' + Autolinker.link(String(feature.properties['field1'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Building Name</th><td>' + Autolinker.link(String(feature.properties['name'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -175,7 +182,7 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_listedpolysJSON);
+   //feature_group.addLayer(exp_listedpolysJSON);
 
     var unknownperiodpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:unknown-period_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetunknownperiodpolygonsJson';
     unknownperiodpolygonsURL=unknownperiodpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -192,7 +199,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -214,7 +221,7 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_unknownperiodpolygonsJSON);
+    //feature_group.addLayer(exp_unknownperiodpolygonsJSON);
 
     var postmedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:post-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetpostmedievalpolygonsJson';
     postmedievalpolygonsURL=postmedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -231,7 +238,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -253,8 +260,9 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_postmedievalpolygonsJSON);
-
+    //feature_group.addLayer(exp_postmedievalpolygonsJSON);
+    postmed_group.addLayer(exp_postmedievalpolygonsJSON);
+    
     var postmedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:post-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetpostmedievalpointsJson';
     postmedievalpointsURL=postmedievalpointsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
     var exp_postmedievalpointsJSON = L.geoJson(null, {
@@ -269,7 +277,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -291,7 +299,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_postmedievalpointsJSON);
+    //feature_group.addLayer(exp_postmedievalpointsJSON);
+    postmed_group.addLayer(exp_postmedievalpointsJSON);
 
     var latemedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:late-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetlatemedievalpolygonsJson';
     latemedievalpolygonsURL=latemedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -308,7 +317,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -330,7 +339,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_latemedievalpolygonsJSON);
+   // feature_group.addLayer(exp_latemedievalpolygonsJSON);
+   latemed_group.addLayer(exp_latemedievalpolygonsJSON);
 
     var latemedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:late-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetlatemedievalpointsJson';
     latemedievalpointsURL=latemedievalpointsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -346,7 +356,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -368,7 +378,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_latemedievalpointsJSON);
+    //feature_group.addLayer(exp_latemedievalpointsJSON);
+    latemed_group.addLayer(exp_latemedievalpointsJSON);
 
     var earlymedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:early-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetearlymedievalpolygonsJson';
     earlymedievalpolygonsURL=earlymedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -385,7 +396,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -407,7 +418,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_earlymedievalpolygonsJSON);
+    //feature_group.addLayer(exp_earlymedievalpolygonsJSON);
+    earlymed_group.addLayer(exp_earlymedievalpolygonsJSON);
 
     var earlymedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:early-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetearlymedievalpointsJson';
     earlymedievalpointsURL=earlymedievalpointsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -423,8 +435,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
-      layer.bindPopup(popupContent);
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       }
     });
     layerOrder[layerOrder.length] = exp_earlymedievalpointsJSON;
@@ -445,7 +456,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_earlymedievalpointsJSON);
+   // feature_group.addLayer(exp_earlymedievalpointsJSON);
+   earlymed_group.addLayer(exp_earlymedievalpointsJSON);
 
     var romanpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:roman_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetromanpolygonsJson';
     romanpolygonsURL=romanpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -462,8 +474,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
-      layer.bindPopup(popupContent);
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       }
     });
     layerOrder[layerOrder.length] = exp_romanpolygonsJSON;
@@ -484,7 +495,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_romanpolygonsJSON);
+   // feature_group.addLayer(exp_romanpolygonsJSON);
+   roman_group.addLayer(exp_romanpolygonsJSON);
 
     var romanmonumentsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:roman_monuments&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetromanmonumentsJson';
     romanmonumentsURL=romanmonumentsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -500,8 +512,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
-      layer.bindPopup(popupContent);
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       }
     });
     layerOrder[layerOrder.length] = exp_romanmonumentsJSON;
@@ -522,7 +533,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_romanmonumentsJSON);
+    //feature_group.addLayer(exp_romanmonumentsJSON);
+    roman_group.addLayer(exp_romanmonumentsJSON);
 
     var prehistoricpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:prehistoric_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetprehistoricpolygonsJson';
     prehistoricpolygonsURL=prehistoricpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -539,7 +551,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -561,7 +573,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_prehistoricpolygonsJSON);
+    //feature_group.addLayer(exp_prehistoricpolygonsJSON);
+    prehistoric_group.addLayer(exp_prehistoricpolygonsJSON);
 
     var PrehistoricURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:Prehistoric&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetPrehistoricJson';
     PrehistoricURL=PrehistoricURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -577,7 +590,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -599,7 +612,8 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_PrehistoricJSON);
+    //feature_group.addLayer(exp_PrehistoricJSON);
+    prehistoric_group.addLayer(exp_PrehistoricJSON);
 
     var ImagesURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:human_readable_images&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetImagesJson';
     ImagesURL=ImagesURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -615,7 +629,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UADImageReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADImageReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD ImageReference No</th><td>' + Autolinker.link(String(feature.properties['UADImageReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -637,7 +651,7 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_ImagesJSON);
+    //feature_group.addLayer(exp_ImagesJSON);
 
     var UADEventsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:human_readable_events&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetUADEventsJson';
     UADEventsURL=UADEventsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -653,7 +667,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UADEventReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADEventReferenceNumber'])) + '</td></tr><tr><th scope="row">SiteName</th><td>' + Autolinker.link(String(feature.properties['SiteName'])) + '</td></tr><tr><th scope="row">EventType</th><td>' + Autolinker.link(String(feature.properties['EventType'])) + '</td></tr><tr><th scope="row">StartDate</th><td>' + Autolinker.link(String(feature.properties['StartDate'])) + '</td></tr><tr><th scope="row">EndDate</th><td>' + Autolinker.link(String(feature.properties['EndDate'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Event Reference No</th><td>' + Autolinker.link(String(feature.properties['UADEventReferenceNumber'])) + '</td></tr><tr><th scope="row">Site Name</th><td>' + Autolinker.link(String(feature.properties['SiteName'])) + '</td></tr><tr><th scope="row">Event Type</th><td>' + Autolinker.link(String(feature.properties['EventType'])) + '</td></tr><tr><th scope="row">Start Date</th><td>' + Autolinker.link(String(feature.properties['StartDate'])) + '</td></tr><tr><th scope="row">End Date</th><td>' + Autolinker.link(String(feature.properties['EndDate'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -675,23 +689,14 @@
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    feature_group.addLayer(exp_UADEventsJSON);
+   // feature_group.addLayer(exp_UADEventsJSON);
 
     feature_group.addTo(map);
-    var title = new L.Control();
-    title.onAdd = function (map) {
-      this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-      this.update();
-      return this._div;
-    };
-    title.update = function () {
-      this._div.innerHTML = '<h2>This is the title</h2>This is the subtitle'
-    };
-    title.addTo(map);
+    
   var baseMaps = {
-    'Stamen Toner': basemap_0
+    'Base Map': basemap_0
   };
-    L.control.layers(baseMaps,{"UADEvents": exp_UADEventsJSON,"Images": exp_ImagesJSON,"Prehistoric": exp_PrehistoricJSON,"prehistoricpolygons": exp_prehistoricpolygonsJSON,"romanmonuments": exp_romanmonumentsJSON,"romanpolygons": exp_romanpolygonsJSON,"earlymedievalpoints": exp_earlymedievalpointsJSON,"earlymedievalpolygons": exp_earlymedievalpolygonsJSON,"latemedievalpoints": exp_latemedievalpointsJSON,"latemedievalpolygons": exp_latemedievalpolygonsJSON,"postmedievalpoints": exp_postmedievalpointsJSON,"postmedievalpolygons": exp_postmedievalpolygonsJSON,"unknownperiodpolygons": exp_unknownperiodpolygonsJSON,"listedpolys": exp_listedpolysJSON,"OSFirstEdition25inch": overlay_OSFirstEdition25inch,"Mackreth1778": overlay_Mackreth1778,"Docton1684": overlay_Docton1684,"Clarke": overlay_Clarke,"Baines1824": overlay_Baines1824},{collapsed:false}).addTo(map);
+    L.control.layers(baseMaps,{"Digs and Surveys": exp_UADEventsJSON,"Paintings and Drawings": exp_ImagesJSON,"Prehistoric Monuments":prehistoric_group,"Roman Monuments": roman_group,"Early Medieval Monuments": earlymed_group,"Late Medieval Monuments":  latemed_group,"Post-Medieval Monuments": postmed_group,"Monuments of unknown period": exp_unknownperiodpolygonsJSON,"Listed Building Outlines": exp_listedpolysJSON,"Ordnance Survey First Edition 25inch Map": overlay_OSFirstEdition25inch,"Mackreth's Map of 1778": overlay_Mackreth1778,"Docton's Map of 1684": overlay_Docton1684,"Clarke's Map of 1807": overlay_Clarke,"Baines Map of 1824": overlay_Baines1824},{collapsed:true}).addTo(map);
     L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
   </script>
 <footer id="colophon" class="site-footer" role="contentinfo">
