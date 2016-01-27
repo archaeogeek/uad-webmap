@@ -441,7 +441,7 @@ L.Control.LayerTreeControl = L.Control.extend({
 					//var customParams = {
 					//	bbox: map.getBounds().toBBoxString(),
 					//};
-					var params2 = L.Util.extend(params, customParams);
+					// var params2 = L.Util.extend(params, customParams);
 					var wfsUrl = layerSettings.params.url + L.Util.getParamString(params);
 					$.ajax({
 						url: wfsUrl,
