@@ -437,11 +437,12 @@ L.Control.LayerTreeControl = L.Control.extend({
 
 				this._addLayer(layer, layerId, layerSettings);
 				var wfsHandler = function () {
-					var customParams = {
-						bbox: map.getBounds().toBBoxString(),
-					};
+					// comment these lines out as we don't want to send bounding box each time (line below needs to change from params to params2 to restore original)
+					//var customParams = {
+					//	bbox: map.getBounds().toBBoxString(),
+					//};
 					var params2 = L.Util.extend(params, customParams);
-					var wfsUrl = layerSettings.params.url + L.Util.getParamString(params2);
+					var wfsUrl = layerSettings.params.url + L.Util.getParamString(params);
 					$.ajax({
 						url: wfsUrl,
 						dataType: 'json',
