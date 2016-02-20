@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>QGIS2leaf webmap</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+		<link rel="stylesheet" type="text/css" href="css/own_style.css">
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+		<script src="js/leaflet-hash.js"></script>
+		<script src="js/Autolinker.min.js"></script>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	</head>
+	<body>
+		<div id="map"></div>
+		<script>
+		var map = L.map('map', {
+			zoomControl:true, maxZoom:19
+		}).fitBounds([[54.0429847526,-2.84579380564],[54.057594738,-2.763002261]]);
+		var hash = new L.Hash(map);
+		var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
+		var feature_group = new L.featureGroup([]);
+		var raster_group = new L.LayerGroup([]);
+		var basemap_0 = L.tileLayer('http://a.tile.stamen.com/toner/{z}/{x}/{y}.png', { 
+			attribution: additional_attrib + 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+		});	
+		basemap_0.addTo(map);	
+		var layerOrder=new Array();
+		var overlay_Baines1824 = L.tileLayer.wms('http://lancasteruadgeo.oxfordarchaeology.com/geoserver/uad/wms?version=1.1.0', {
+			layers: 'Baines1824',
+			format: 'image/png',
+			transparent: true,
+			continuousWorld : true,
+		}).addTo(map);
+
+		var uadPrehistoricURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:Prehistoric&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadPrehistoricJson';
+		uadPrehistoricURL=uadPrehistoricURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadPrehistoricJSON = L.geoJson(null, {
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng, {
+					radius: 4.0,
+					fillColor: '#1cc5f3',
+					color: '#000000',
+					weight: 1,
+					opacity: 1.0,
+					fillOpacity: 1.0
+				})
+			},
+			onEachFeature: function (feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadPrehistoricJSON;
+		var uadPrehistoricajax = $.ajax({
+			url : uadPrehistoricURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadPrehistoricJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadPrehistoricJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadPrehistoricJSON);
+
+		var uadhumanreadableimagesURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:human_readable_images&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadhumanreadableimagesJson';
+		uadhumanreadableimagesURL=uadhumanreadableimagesURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadhumanreadableimagesJSON = L.geoJson(null, {
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng, {
+					radius: 4.0,
+					fillColor: '#8feb64',
+					color: '#000000',
+					weight: 1,
+					opacity: 1.0,
+					fillOpacity: 1.0
+				})
+			},
+			onEachFeature: function (feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">UADImageReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADImageReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadhumanreadableimagesJSON;
+		var uadhumanreadableimagesajax = $.ajax({
+			url : uadhumanreadableimagesURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadhumanreadableimagesJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadhumanreadableimagesJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadhumanreadableimagesJSON);
+
+		var uadearlymedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:early-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadearlymedievalpointsJson';
+		uadearlymedievalpointsURL=uadearlymedievalpointsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadearlymedievalpointsJSON = L.geoJson(null, {
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng, {
+					radius: 4.0,
+					fillColor: '#d3ee72',
+					color: '#000000',
+					weight: 1,
+					opacity: 1.0,
+					fillOpacity: 1.0
+				})
+			},
+			onEachFeature: function (feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadearlymedievalpointsJSON;
+		var uadearlymedievalpointsajax = $.ajax({
+			url : uadearlymedievalpointsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadearlymedievalpointsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadearlymedievalpointsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadearlymedievalpointsJSON);
+
+		var uadearlymedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:early-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadearlymedievalpolygonsJson';
+		uadearlymedievalpolygonsURL=uadearlymedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadearlymedievalpolygonsJSON = L.geoJson(null, {
+			style: function (feature) {
+				return {
+					color: '#000000',
+					fillColor: '#61c83e',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+			},
+			onEachFeature: function (feature, layer){					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadearlymedievalpolygonsJSON;
+		var uadearlymedievalpolygonsajax = $.ajax({
+			url : uadearlymedievalpolygonsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadearlymedievalpolygonsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadearlymedievalpolygonsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadearlymedievalpolygonsJSON);
+
+		var uadlatemedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:late-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadlatemedievalpointsJson';
+		uadlatemedievalpointsURL=uadlatemedievalpointsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadlatemedievalpointsJSON = L.geoJson(null, {
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng, {
+					radius: 4.0,
+					fillColor: '#a473dc',
+					color: '#000000',
+					weight: 1,
+					opacity: 1.0,
+					fillOpacity: 1.0
+				})
+			},
+			onEachFeature: function (feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadlatemedievalpointsJSON;
+		var uadlatemedievalpointsajax = $.ajax({
+			url : uadlatemedievalpointsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadlatemedievalpointsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadlatemedievalpointsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadlatemedievalpointsJSON);
+
+		var uadlatemedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:late-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadlatemedievalpolygonsJson';
+		uadlatemedievalpolygonsURL=uadlatemedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadlatemedievalpolygonsJSON = L.geoJson(null, {
+			style: function (feature) {
+				return {
+					color: '#000000',
+					fillColor: '#79fa90',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+			},
+			onEachFeature: function (feature, layer){					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadlatemedievalpolygonsJSON;
+		var uadlatemedievalpolygonsajax = $.ajax({
+			url : uadlatemedievalpolygonsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadlatemedievalpolygonsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadlatemedievalpolygonsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadlatemedievalpolygonsJSON);
+
+		var uadpostmedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:post-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadpostmedievalpointsJson';
+		uadpostmedievalpointsURL=uadpostmedievalpointsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadpostmedievalpointsJSON = L.geoJson(null, {
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng, {
+					radius: 4.0,
+					fillColor: '#56991c',
+					color: '#000000',
+					weight: 1,
+					opacity: 1.0,
+					fillOpacity: 1.0
+				})
+			},
+			onEachFeature: function (feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadpostmedievalpointsJSON;
+		var uadpostmedievalpointsajax = $.ajax({
+			url : uadpostmedievalpointsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadpostmedievalpointsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadpostmedievalpointsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadpostmedievalpointsJSON);
+
+		var uadpostmedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:post-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadpostmedievalpolygonsJson';
+		uadpostmedievalpolygonsURL=uadpostmedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadpostmedievalpolygonsJSON = L.geoJson(null, {
+			style: function (feature) {
+				return {
+					color: '#000000',
+					fillColor: '#606ca7',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+			},
+			onEachFeature: function (feature, layer){					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadpostmedievalpolygonsJSON;
+		var uadpostmedievalpolygonsajax = $.ajax({
+			url : uadpostmedievalpolygonsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadpostmedievalpolygonsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadpostmedievalpolygonsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadpostmedievalpolygonsJSON);
+
+		var uadprehistoricpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:prehistoric_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadprehistoricpolygonsJson';
+		uadprehistoricpolygonsURL=uadprehistoricpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadprehistoricpolygonsJSON = L.geoJson(null, {
+			style: function (feature) {
+				return {
+					color: '#000000',
+					fillColor: '#feab25',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+			},
+			onEachFeature: function (feature, layer){					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadprehistoricpolygonsJSON;
+		var uadprehistoricpolygonsajax = $.ajax({
+			url : uadprehistoricpolygonsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadprehistoricpolygonsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadprehistoricpolygonsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadprehistoricpolygonsJSON);
+
+		var uadromanmonumentsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:roman_monuments&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadromanmonumentsJson';
+		uadromanmonumentsURL=uadromanmonumentsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadromanmonumentsJSON = L.geoJson(null, {
+			pointToLayer: function (feature, latlng) {  
+				return L.circleMarker(latlng, {
+					radius: 4.0,
+					fillColor: '#ed2acd',
+					color: '#000000',
+					weight: 1,
+					opacity: 1.0,
+					fillOpacity: 1.0
+				})
+			},
+			onEachFeature: function (feature, layer) {					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">PositionAccuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadromanmonumentsJSON;
+		var uadromanmonumentsajax = $.ajax({
+			url : uadromanmonumentsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadromanmonumentsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadromanmonumentsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadromanmonumentsJSON);
+
+		var uadromanpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:roman_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadromanpolygonsJson';
+		uadromanpolygonsURL=uadromanpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadromanpolygonsJSON = L.geoJson(null, {
+			style: function (feature) {
+				return {
+					color: '#000000',
+					fillColor: '#d4ea42',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+			},
+			onEachFeature: function (feature, layer){					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadromanpolygonsJSON;
+		var uadromanpolygonsajax = $.ajax({
+			url : uadromanpolygonsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadromanpolygonsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadromanpolygonsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadromanpolygonsJSON);
+
+		var uadunknownperiodpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:unknown-period_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetuadunknownperiodpolygonsJson';
+		uadunknownperiodpolygonsURL=uadunknownperiodpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
+		var exp_uadunknownperiodpolygonsJSON = L.geoJson(null, {
+			style: function (feature) {
+				return {
+					color: '#000000',
+					fillColor: '#1be13c',
+					weight: 1.3,
+					dashArray: '',
+					opacity: 1.0,
+					fillOpacity: 1.0
+				};
+
+			},
+			onEachFeature: function (feature, layer){					
+			var popupContent = '<table><tr><th scope="row">uniqueid</th><td>' + Autolinker.link(String(feature.properties['uniqueid'])) + '</td></tr><tr><th scope="row">UADMonumentReferenceNumber</th><td>' + Autolinker.link(String(feature.properties['UADMonumentReferenceNumber'])) + '</td></tr><tr><th scope="row">FullName</th><td>' + Autolinker.link(String(feature.properties['FullName'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">ShortName</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">NarrowPeriod</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">BroadPeriod</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">BroadClass</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">TypeID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">monid</th><td>' + Autolinker.link(String(feature.properties['monid'])) + '</td></tr><tr><th scope="row">source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+			layer.bindPopup(popupContent);
+			}
+		});
+		layerOrder[layerOrder.length] = exp_uadunknownperiodpolygonsJSON;
+		var uadunknownperiodpolygonsajax = $.ajax({
+			url : uadunknownperiodpolygonsURL,
+			dataType : 'jsonp',
+			jsonpCallback : 'getuadunknownperiodpolygonsJson',
+			contentType : 'application/json',
+			success : function (response) {
+				L.geoJson(response, {
+					onEachFeature: function (feature, layer) {
+						exp_uadunknownperiodpolygonsJSON.addData(feature)
+					}
+				});
+				for (index = 0; index < layerOrder.length; index++) {
+					feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+				}
+			}
+		});
+		//add comment sign to hide this layer on the map in the initial view.
+		feature_group.addLayer(exp_uadunknownperiodpolygonsJSON);
+
+		feature_group.addTo(map);
+		var title = new L.Control();
+		title.onAdd = function (map) {
+			this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+			this.update();
+			return this._div;
+		};
+		title.update = function () {
+			this._div.innerHTML = '<h2>This is the title</h2>This is the subtitle'
+		};
+		title.addTo(map);
+	var baseMaps = {
+		'Stamen Toner': basemap_0
+	};
+		L.control.layers(baseMaps,{"uadunknownperiodpolygons": exp_uadunknownperiodpolygonsJSON,"uadromanpolygons": exp_uadromanpolygonsJSON,"uadromanmonuments": exp_uadromanmonumentsJSON,"uadprehistoricpolygons": exp_uadprehistoricpolygonsJSON,"uadpostmedievalpolygons": exp_uadpostmedievalpolygonsJSON,"uadpostmedievalpoints": exp_uadpostmedievalpointsJSON,"uadlatemedievalpolygons": exp_uadlatemedievalpolygonsJSON,"uadlatemedievalpoints": exp_uadlatemedievalpointsJSON,"uadearlymedievalpolygons": exp_uadearlymedievalpolygonsJSON,"uadearlymedievalpoints": exp_uadearlymedievalpointsJSON,"uadhumanreadableimages": exp_uadhumanreadableimagesJSON,"uadPrehistoric": exp_uadPrehistoricJSON,"Baines1824": overlay_Baines1824},{collapsed:false}).addTo(map);
+		L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
+	</script>
+</body>
+</html>
