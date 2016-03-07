@@ -19,12 +19,11 @@
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="css/uad.css" type="text/css" media="all">
 
-  <link rel="stylesheet" href="css/leaflet-layer-tree-control.css"/>
-  <script type="text/javascript" src="js/leaflet-layer-tree-control.js"></script>
-  <script type="text/javascript" src="js/leaflet-layer-tree-control-wfs-zoom.js"></script>
-  <script src="js/leaflet-hash.js"></script>
+  <script src="js/leaflet.zoomhome.js"></script>
+  <!--<script src="js/leaflet-hash.js"></script> -->
+  <link rel="stylesheet" href="css/leaflet.zoomhome.css" />
   <link rel="stylesheet" href="css/leaflet-search.css" />
-  <script src="js/leaflet-search.min.js"></script>
+  <script src="js/leaflet-search-patched.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/fuse.js/1.2.2/fuse.min.js"></script>
   <script src="js/Autolinker.min.js"></script>
   <script type="text/javascript">
@@ -96,9 +95,8 @@
     <div id="map"></div>
     <script>
     var map = L.map('map', {
-      zoomControl:true, maxZoom:19
+      zoomControl:false, maxZoom:19
     }).fitBounds([[54.0445042678,-2.81284059097],[54.0516320403,-2.79122468678]]);
-    var hash = new L.Hash(map);
     var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
     var feature_group = new L.featureGroup([]);
     var raster_group = new L.LayerGroup([]);
@@ -691,13 +689,24 @@
     //add comment sign to hide this layer on the map in the initial view.
    // feature_group.addLayer(exp_UADEventsJSON);
 
-    feature_group.addTo(map);
+    //feature_group.addTo(map);
     
   var baseMaps = {
     'Base Map': basemap_0
   };
     L.control.layers(baseMaps,{"Digs and Surveys": exp_UADEventsJSON,"Paintings and Drawings": exp_ImagesJSON,"Prehistoric Monuments":prehistoric_group,"Roman Monuments": roman_group,"Early Medieval Monuments": earlymed_group,"Late Medieval Monuments":  latemed_group,"Post-Medieval Monuments": postmed_group,"Monuments of unknown period": exp_unknownperiodpolygonsJSON,"Listed Building Outlines": exp_listedpolysJSON,"Ordnance Survey First Edition 25inch Map": overlay_OSFirstEdition25inch,"Mackreth's Map of 1778": overlay_Mackreth1778,"Docton's Map of 1684": overlay_Docton1684,"Clarke's Map of 1807": overlay_Clarke,"Baines Map of 1824": overlay_Baines1824},{collapsed:true}).addTo(map);
     L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
+
+    L.control.search({
+        layer: prehistoric_group,
+        initial: false,
+        propertyName: 'UADMonumentReferenceNumber'
+      })
+      .addTo(map);
+
+      var zoomHome = L.Control.zoomHome();
+      zoomHome.addTo(map);
+
   </script>
 <footer id="colophon" class="site-footer" role="contentinfo">
   <div class="row">
