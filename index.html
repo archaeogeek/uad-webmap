@@ -697,29 +697,29 @@
     L.control.layers(baseMaps,{"Digs and Surveys": exp_UADEventsJSON,"Paintings and Drawings": exp_ImagesJSON,"Prehistoric Monuments":prehistoric_group,"Roman Monuments": roman_group,"Early Medieval Monuments": earlymed_group,"Late Medieval Monuments":  latemed_group,"Post-Medieval Monuments": postmed_group,"Monuments of unknown period": exp_unknownperiodpolygonsJSON,"Listed Building Outlines": exp_listedpolysJSON,"Ordnance Survey First Edition 25inch Map": overlay_OSFirstEdition25inch,"Mackreth's Map of 1778": overlay_Mackreth1778,"Docton's Map of 1684": overlay_Docton1684,"Clarke's Map of 1807": overlay_Clarke,"Baines Map of 1824": overlay_Baines1824},{collapsed:true}).addTo(map);
     L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
 
-    var fuse = new Fuse(feature_group.features, {
-    keys: ['properties.Name', 'properties.UADReferenceNumber']
-  });
+    //var fuse = new Fuse(feature_group.features, {
+    //keys: ['properties.Name', 'properties.UADReferenceNumber']
+  //});
 
     L.control.search({
         layer: feature_group,
         initial: false,
-        propertyName: 'Name',
-        filterData: function(text, records) {
-            var jsons = fuse.search(text),
-              ret = {}, key;
+        propertyName: 'Name'
+        //filterData: function(text, records) {
+        //    var jsons = fuse.search(text),
+        //      ret = {}, key;
             
-            for(var i in jsons) {
-              key = jsons[i].properties.name;
-              ret[ key ]= records[key];
-            }
+        //    for(var i in jsons) {
+        //      key = jsons[i].properties.name;
+        //      ret[ key ]= records[key];
+        //    }
 
-            console.log(jsons,ret);
-            return ret;
-          }
-        })
-        .on('search_locationfound', function(e) {
-          e.layer.openPopup();
+        //    console.log(jsons,ret);
+        //    return ret;
+        //  }
+        //})
+        //.on('search_locationfound', function(e) {
+        //  e.layer.openPopup();
         })
       .addTo(map);
 
