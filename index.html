@@ -17,16 +17,21 @@
 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="css/uad.css" type="text/css" media="all">
+  
 
   <script src="js/leaflet.zoomhome.js"></script>
   <!--<script src="js/leaflet-hash.js"></script> -->
   <link rel="stylesheet" href="css/leaflet.zoomhome.css" />
   <link rel="stylesheet" href="css/leaflet-search.css" />
+
+  <link rel="stylesheet" href="css/uad.css" type="text/css" media="all">
+
   <script src="js/leaflet-search-patched.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/fuse.js/1.2.2/fuse.js"></script>
   <script src="js/Autolinker.min.js"></script>
   <script type="text/javascript">
+
+
 
   <!--
     jQuery(document).ready(function(){jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery(".scroll-to-top").fadeIn()}else{jQuery(".scroll-to-top").fadeOut()}});jQuery(".scroll-to-top").click(function(){jQuery("html, body").animate({scrollTop:0},800);return false})})
@@ -158,7 +163,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Building Name</th><td>' + Autolinker.link(String(feature.properties['name'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -197,7 +202,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -236,7 +241,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -275,7 +280,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -315,7 +320,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -354,7 +359,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -394,7 +399,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -433,7 +438,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       }
     });
     layerOrder[layerOrder.length] = exp_earlymedievalpointsJSON;
@@ -472,7 +477,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       }
     });
     layerOrder[layerOrder.length] = exp_romanpolygonsJSON;
@@ -510,7 +515,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       }
     });
     layerOrder[layerOrder.length] = exp_romanmonumentsJSON;
@@ -549,7 +554,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -588,7 +593,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Reference No. </th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Full Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type of Monument</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr><tr><th scope="row">Short Name</th><td>' + Autolinker.link(String(feature.properties['ShortName'])) + '</td></tr><tr><th scope="row">Narrowest Period</th><td>' + Autolinker.link(String(feature.properties['NarrowPeriod'])) + '</td></tr><tr><th scope="row">Broadest Period</th><td>' + Autolinker.link(String(feature.properties['BroadPeriod'])) + '</td></tr><tr><th scope="row">Broad Class</th><td>' + Autolinker.link(String(feature.properties['BroadClass'])) + '</td></tr><tr><th scope="row">Type ID</th><td>' + Autolinker.link(String(feature.properties['TypeID'])) + '</td></tr><tr><th scope="row">Term</th><td>' + Autolinker.link(String(feature.properties['Term'])) + '</td></tr><tr><th scope="row">Source</th><td>' + Autolinker.link(String(feature.properties['source'])) + '</td></tr><tr><th scope="row">Definite</th><td>' + Autolinker.link(String(feature.properties['definite'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -627,7 +632,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD ImageReference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD ImageReference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -665,7 +670,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Event Reference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Site Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Event Type</th><td>' + Autolinker.link(String(feature.properties['EventType'])) + '</td></tr><tr><th scope="row">Start Date</th><td>' + Autolinker.link(String(feature.properties['StartDate'])) + '</td></tr><tr><th scope="row">End Date</th><td>' + Autolinker.link(String(feature.properties['EndDate'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Description</th><td>' + Autolinker.link(String(feature.properties['Description'])) + '</td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Event Reference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Site Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Event Type</th><td>' + Autolinker.link(String(feature.properties['EventType'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_events&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });

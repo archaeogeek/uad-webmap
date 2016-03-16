@@ -313,6 +313,15 @@ a#menubutton {
 	height: 600px;
 }
 
+.leaflet-container table {
+	font-size: 12px !important;
+}
+
+.leaflet-container td, th {
+	vertical-align: top !important;
+	padding: 2px;
+}
+
 /* =Footer
 ----------------------------------------------- */
 #colophon {
