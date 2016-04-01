@@ -27,7 +27,6 @@
   <link rel="stylesheet" href="css/uad.css" type="text/css" media="all">
 
   <script src="js/leaflet-search-patched.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/fuse.js/1.2.2/fuse.js"></script>
   <script src="js/Autolinker.min.js"></script>
   <script type="text/javascript">
 
@@ -96,8 +95,7 @@
       </div><!-- block -->
 
     </div><!-- close .main-content -->
-<body>
-    <div id="map"></div>
+
     <script>
     var map = L.map('map', {
       zoomControl:false, maxZoom:19
@@ -110,6 +108,7 @@
     var earlymed_group = new L.LayerGroup([]);
     var latemed_group = new L.LayerGroup([]);
     var postmed_group = new L.LayerGroup([]);
+    var search_group = new L.featureGroup([]);
     var basemap_0 = L.tileLayer('http://a.tile.stamen.com/toner/{z}/{x}/{y}.png', { 
       attribution: additional_attrib + 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
     }); 
@@ -439,6 +438,7 @@
       },
       onEachFeature: function (feature, layer) {          
       var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      layer.bindPopup(popupContent);
       }
     });
     layerOrder[layerOrder.length] = exp_earlymedievalpointsJSON;
@@ -478,6 +478,7 @@
       },
       onEachFeature: function (feature, layer){         
       var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      layer.bindPopup(popupContent);
       }
     });
     layerOrder[layerOrder.length] = exp_romanpolygonsJSON;
@@ -516,6 +517,7 @@
       },
       onEachFeature: function (feature, layer) {          
       var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      layer.bindPopup(popupContent);
       }
     });
     layerOrder[layerOrder.length] = exp_romanmonumentsJSON;
@@ -699,15 +701,39 @@
   var baseMaps = {
     'Base Map': basemap_0
   };
-    L.control.layers(baseMaps,{"Digs and Surveys": exp_UADEventsJSON,"Paintings and Drawings": exp_ImagesJSON,"Prehistoric Monuments":prehistoric_group,"Roman Monuments": roman_group,"Early Medieval Monuments": earlymed_group,"Late Medieval Monuments":  latemed_group,"Post-Medieval Monuments": postmed_group,"Monuments of unknown period": exp_unknownperiodpolygonsJSON,"Listed Building Outlines": exp_listedpolysJSON,"Ordnance Survey First Edition 25inch Map": overlay_OSFirstEdition25inch,"Mackreth's Map of 1778": overlay_Mackreth1778,"Docton's Map of 1684": overlay_Docton1684,"Clarke's Map of 1807": overlay_Clarke,"Baines Map of 1824": overlay_Baines1824},{collapsed:true}).addTo(map);
+
+  var overLays = {
+  	"Digs and Surveys": exp_UADEventsJSON,
+  	"Paintings and Drawings": exp_ImagesJSON,
+  	"Prehistoric Monuments":prehistoric_group,
+  	"Roman Monuments": roman_group,
+  	"Early Medieval Monuments": earlymed_group,
+  	"Late Medieval Monuments":  latemed_group,
+  	"Post-Medieval Monuments": postmed_group,
+  	"Monuments of unknown period": exp_unknownperiodpolygonsJSON,
+  	"Listed Building Outlines": exp_listedpolysJSON,
+  	"Ordnance Survey First Edition 25inch Map": overlay_OSFirstEdition25inch,
+  	"Mackreth's Map of 1778": overlay_Mackreth1778,
+  	"Docton's Map of 1684": overlay_Docton1684,
+  	"Clarke's Map of 1807": overlay_Clarke,
+  	"Baines Map of 1824": overlay_Baines1824
+  };
+
+    L.control.layers(baseMaps,overLays,{collapsed:true}).addTo(map);
     L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
 
-    //var fuse = new Fuse(feature_group.features, {
-    //keys: ['properties.Name', 'properties.UADReferenceNumber']
-  //});
+  map.on('overlayadd', function(e) {
+  	search_group.addLayer(e.layer);
+  });
+
+   map.on('overlayremove', function(e) {
+  	search_group.addLayer(e.layer);
+  });
+
+
 
     L.control.search({
-        layer: feature_group,
+        layer: search_group,
         initial: false,
         propertyName: 'Name'
         //filterData: function(text, records) {
@@ -722,9 +748,9 @@
         //    console.log(jsons,ret);
         //    return ret;
         //  }
-        //})
-        //.on('search_locationfound', function(e) {
-        //  e.layer.openPopup();
+        })
+        .on('search_locationfound', function(e) {
+          e.layer.openPopup();
         })
       .addTo(map);
 
