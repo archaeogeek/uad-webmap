@@ -321,6 +321,34 @@ a#menubutton {
 	vertical-align: top !important;
 	padding: 2px;
 }
+#report .descriptive{
+	display: block;
+	width: 65%;
+	float: left;
+	clear: left;
+}
+#report .meta{
+	display: block;
+	width: 30%;
+	float: right;
+	clear: right;
+	background: #ccc;
+	font-size: smaller;
+}
+#report .meta_item{
+	display: block;
+	width: 98%;
+	padding: 3px 2%;
+	margin: 0;
+	border-bottom: 1px dotted #fff;	
+}
+
+#report h3, #report p{
+
+}
+.clearing{
+	clear: both;
+}
 
 /* =Footer
 ----------------------------------------------- */
@@ -496,6 +524,12 @@ button[type=submit] {
 	.half {
 		float: none;
 		height: auto;
+		width: 100%;
+	}
+	#report .descriptive{
+		width: 100%;
+	}
+	#report .meta{
 		width: 100%;
 	}
 }
