@@ -414,6 +414,11 @@ L.Control.LayerTreeControl = L.Control.extend({
 	addLayer: function (layerSettings, layerId) {
 		var map = this._map;
 		var me = this;
+
+		if (layerSettings.popupContent) {
+			alert("Popup defined");
+		}
+
 		switch (layerSettings.serviceType) {
 			case "OSM":
 				var layer = L.tileLayer(layerSettings.params.url, {});
