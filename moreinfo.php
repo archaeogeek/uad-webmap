@@ -10,16 +10,20 @@ $jsonIterator = new RecursiveIteratorIterator(
     new RecursiveArrayIterator(json_decode($json, TRUE)),
     RecursiveIteratorIterator::SELF_FIRST);
 
+//Image problem - see for example:
+//http://localhost/LancasterUAD/moreinfo.php?table=human_readable_images&refno=387 - link but no image
+//http://localhost/LancasterUAD/moreinfo.php?table=human_readable_events&refno=474 - no link
+
 $report=$subreport=array();
 $i=-1;
 foreach ($jsonIterator as $key => $val) {
     if(is_array($val)) {
        // echo "$key:"."<br>";
     } else {
-        // echo "$key => $val"."<br>";
+        //echo "$key => $val"."<br>";
 		switch($key){
 			case 'uniqueid':
-				//$subreport[$i]="<span class='meta_item'><strong>ID:</strong> $val </span>\n";
+				$subreport[$i]="<span class='meta_item'><strong>ID:</strong> $val </span>\n";
 				break;
 			case 'UADReferenceNumber':
 				$i++;
@@ -58,7 +62,10 @@ foreach ($jsonIterator as $key => $val) {
 			case 'Term':
 				$subreport[$i].="<span class='meta_item'><strong>Term:</strong> $val </span>\n";
 				break;
-
+			case 'Hyperlink':
+				$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$val' target='uadimage'>$val</a></span>\n";
+				break;
+				
 			case 'Name':
 				$report[$i]="<h3>$val </h3>\n";
 				break;
