@@ -365,6 +365,7 @@ a#menubutton {
 }
 #colophon a:hover {
 	color: #fff;
+	background: transparent;
 }
 
 #colophon ul{
@@ -435,7 +436,8 @@ a#facebook {
 	transition: background-color  0.5s;
 }
 a#facebook:hover {
-	background-color: #4265b9 !important;
+	background: #4265b9 url('../images/facebook.png') no-repeat 50% 50%;
+	background: #4265b9 url('../images/facebook.svg') no-repeat 50% 50%;
 }
 
 /* =Elements when no javaScript is present
