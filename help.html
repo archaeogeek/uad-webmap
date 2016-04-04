@@ -1,0 +1,116 @@
+<html>
+<head>
+  <title>Lancaster UAD webmap Help</title>
+  <meta charset="UTF-8">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- leaflet -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/uad.css?v=<?php echo rand();?>" type="text/css" media="all">
+  <script src="js/leaflet-search-patched.js"></script>
+  <script type="text/javascript">
+
+  <!--
+    jQuery(document).ready(function(){jQuery(window).scroll(function(){if(jQuery(this).scrollTop()>100){jQuery(".scroll-to-top").fadeIn()}else{jQuery(".scroll-to-top").fadeOut()}});jQuery(".scroll-to-top").click(function(){jQuery("html, body").animate({scrollTop:0},800);return false})})
+    
+    function menutoggle(){
+      $('#menuitems').toggle(500);
+      var menuon=document.getElementById("#menuitems").style.display;
+      if(menuon=="none"){
+        document.getElementById("menu").style.border = "none";
+      }
+    }
+    
+    function clearcookiedisplay(){
+      $('#cookies').hide(500);
+    }
+  -->
+  </script>
+  <noscript>
+  <style type="text/css">
+  @media screen and (max-width: 770px) {
+    #logo img{
+      max-width: 100%;
+    }
+    #menuitems{
+      display: block;
+    }
+    a#menubutton {
+      display: none;
+    }
+  }
+  </style>
+  </noscript>
+
+</head> 
+  <body class="home blog">
+    <div id="page" class="hfeed site">
+    <header id="masthead" class="site-header" role="banner">
+      <div class="row" id="menu">
+        <div id="logo">
+          <a href="http://beyondthecastle.org/"><img src="./images/btc_header2.gif" alt="Beyond The Castle" height="76" width="379"></a>
+        </div><!-- end of #logo -->
+        <div id="menuitems">
+          <ul>
+          <li><a title="Home" href="http://beyondthecastle.org/">Home</a></li>
+          <li><a title="About the Project" href="http://beyondthecastle.org/about/">About the Project</a></li>
+          <li><a title="Contact" href="http://beyondthecastle.org/contact/">Contact</a></li>
+          </ul>
+        </div>
+        <a id="menubutton" onclick="menutoggle()" title="Toggle menu display."></a>
+        
+      </div>
+    </header><!-- #masthead -->
+
+    <div id="content" class="row">
+		<div class="block">
+			<h1 class="entry-title">Help using the map</h1>
+      <p><strong>This map shows the archaeological finds and features (aka Monuments) and the digs and surveys that discovered them, within the historic city of Lancaster. The data is derived from the Lancaster Urban Archaeological Database, compiled by Oxford Archaeology North.</strong></p>
+      <p>The map is composed of layers that represent the time-periods of the monuments and finds. Click the layer icon (top right) to choose which layers you want to see displayed.</p>
+      <p>There are also layers for historic maps, for digs and surveys, and photographs.</p>
+      <p>Click on a feature on the map to see an information popup- click on the "more info" link in the popup to open more detailed information in another page in your browser.</p>
+      <p>You can search the active layers (the ones shown on the map) using the search button (top left). Type a name or location in the search box that appears.</p>
+      <p>Zoom in and out using the scroll wheel on your mouse, or the plus and minus buttons on the map. Click and drag the map to pan around.</p>
+      <p>Click the home button to return to the original location and zoom level.</p>
+			<div class="clearing">&nbsp;</div>
+			<div class="sub-nav">
+			<a href="#" onclick="javascript:window.close();" class="button">Close</a>
+			</div><!-- sub-nav -->
+		</div><!-- block -->
+
+    </div><!-- close .main-content -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="row">
+    <a id="facebook"></a>     
+    
+    <nav role="navigation">
+      <div class="half">
+        <ul id="menu-footer-menu" class="nav footer-nav clearfix">
+        <li id="menu-item-145" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-145"><a href="http://beyondthecastle.org/">Home</a></li>
+        <li id="menu-item-149" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-149"><a href="http://beyondthecastle.org/what-you-can-do-to-help/">What You Can Do To Help</a>
+        <ul class="sub-menu">
+          <li id="menu-item-150" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-150"><a href="http://beyondthecastle.org/get-involved-2/">Get Involved</a></li>
+        </ul>
+        </li>
+        <li id="menu-item-142" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-142"><a href="http://beyondthecastle.org/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="half">
+        <div class="copyright"><a href="http://beyondthecastle.org/wordpress/" title="Beyond The Castle">Beyond The Castle</a>  All rights reserved.</div>
+      </div>
+      
+    </nav>
+  </div>
+  <div style="display: none;" class="scroll-to-top">&#094;</div><!-- .scroll-to-top -->
+  
+</footer><!-- #colophon -->
+
+<!-- #page -->
+
+</body>
+</html>
