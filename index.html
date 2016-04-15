@@ -100,7 +100,7 @@
     var map = L.map('map', {
       zoomControl:false, maxZoom:19
     }).fitBounds([[54.0445042678,-2.81284059097],[54.0516320403,-2.79122468678]]);
-    var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="_blank">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="_blank">Geolicious</a> & contributors<br>';
+    var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="moreinfo">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="moreinfo">Geolicious</a> & contributors<br>';
     var feature_group = new L.featureGroup([]);
     var raster_group = new L.LayerGroup([]);
     var prehistoric_group = new L.LayerGroup([]);
@@ -201,7 +201,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td></tr><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -240,7 +240,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -271,7 +271,7 @@
       pointToLayer: function (feature, latlng) {  
         return L.circleMarker(latlng, {
           radius: 4.0,
-          fillColor: '#1ddb1a',
+          fillColor: '#2abae2',
           color: '#000000',
           weight: 1,
           opacity: 1.0,
@@ -279,7 +279,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -319,7 +319,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -350,7 +350,7 @@
       pointToLayer: function (feature, latlng) {  
         return L.circleMarker(latlng, {
           radius: 4.0,
-          fillColor: '#54b176',
+          fillColor: '#bcc4fc',
           color: '#000000',
           weight: 1,
           opacity: 1.0,
@@ -358,7 +358,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -398,7 +398,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -429,7 +429,7 @@
       pointToLayer: function (feature, latlng) {  
         return L.circleMarker(latlng, {
           radius: 4.0,
-          fillColor: '#f0b6a6',
+          fillColor: '#d3c02f',
           color: '#000000',
           weight: 1,
           opacity: 1.0,
@@ -437,7 +437,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -477,7 +477,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -508,7 +508,7 @@
       pointToLayer: function (feature, latlng) {  
         return L.circleMarker(latlng, {
           radius: 4.0,
-          fillColor: '#925646',
+          fillColor: '#789c03',
           color: '#000000',
           weight: 1,
           opacity: 1.0,
@@ -516,7 +516,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -556,7 +556,7 @@
 
       },
       onEachFeature: function (feature, layer){         
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -587,7 +587,7 @@
       pointToLayer: function (feature, latlng) {  
         return L.circleMarker(latlng, {
           radius: 4.0,
-          fillColor: '#bf5c1e',
+          fillColor: '#805c7f',
           color: '#000000',
           weight: 1,
           opacity: 1.0,
@@ -595,7 +595,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">Reference No.</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Type</th><td>' + Autolinker.link(String(feature.properties['Type'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_monuments&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -634,7 +634,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD ImageReference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD ImageReference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Easting</th><td>' + Autolinker.link(String(feature.properties['Easting'])) + '</td></tr><tr><th scope="row">Northing</th><td>' + Autolinker.link(String(feature.properties['Northing'])) + '</td></tr><tr><th scope="row">Position Accuracy</th><td>' + Autolinker.link(String(feature.properties['PositionAccuracy'])) + '</td></tr><tr><th scope="row">Hyperlink</th><td>' + Autolinker.link(String(feature.properties['Hyperlink'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
@@ -672,7 +672,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table><tr><th scope="row">UAD Event Reference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Site Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Event Type</th><td>' + Autolinker.link(String(feature.properties['EventType'])) + '</td><tr><td></td><td><a target="_blank" href="moreinfo.php?table=human_readable_events&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
+      var popupContent = '<table><tr><th scope="row">UAD Event Reference No</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td></tr><tr><th scope="row">Site Name</th><td>' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th scope="row">Event Type</th><td>' + Autolinker.link(String(feature.properties['EventType'])) + '</td><tr><td></td><td><a target="moreinfo" href="moreinfo.php?table=human_readable_events&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });
