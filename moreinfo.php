@@ -17,13 +17,13 @@ $jsonIterator = new RecursiveIteratorIterator(
 $report=$subreport=array();
 $i=-1;
 foreach ($jsonIterator as $key => $val) {
-    if(is_array($val)) {
+	if(is_array($val)) {
        // echo "$key:"."<br>";
     } else {
         //echo "$key => $val"."<br>";
 		switch($key){
 			case 'uniqueid':
-				$subreport[$i]="<span class='meta_item'><strong>ID:</strong> $val </span>\n";
+				//$subreport[$i]="<span class='meta_item'><strong>ID:</strong> $val </span>\n";
 				break;
 			case 'UADReferenceNumber':
 				$i++;
@@ -39,7 +39,7 @@ foreach ($jsonIterator as $key => $val) {
 				$subreport[$i].="<span class='meta_item'><strong>Northing:</strong> $val </span>\n";
 				break;
 			case 'PositionAccuracy':
-				//$subreport[$i].="<span class='meta_item'><strong>PositionAccuracy:</strong> $val </span>\n";
+				$subreport[$i].="<span class='meta_item'><strong>PositionAccuracy:</strong> $val </span>\n";
 				break;
 			case 'ShortName':
 				//$subreport[$i].="<span class='meta_item'><strong>ShortName:</strong> $val </span>\n";
@@ -64,14 +64,16 @@ foreach ($jsonIterator as $key => $val) {
 				break;
 			case 'Hyperlink':
 				$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$val' target='uadimage'>$val</a></span>\n";
+				//is it an image?
+				$imageurl[$i]=$val;
 				break;
 				
 			case 'Name':
-				$report[$i]="<h3>$val </h3>\n";
+				$title[$i]=$val;
 				break;
 			case 'Description':
 				$val=str_replace('/n', '</p>\n<p>', $val);
-				$report[$i].="<p>$val </p>\n";
+				$description[$i]="<p>$val </p>\n";
 				break;
 			default:
 				$subreport[$i].="<span class='meta_item'><strong>".$key.":</strong> $val </span>\n";
@@ -79,6 +81,7 @@ foreach ($jsonIterator as $key => $val) {
 		}
     }
 }
+
 ?>
 <html>
 <head>
@@ -161,10 +164,16 @@ foreach ($jsonIterator as $key => $val) {
 		<div class="block">
 			<div id="report">
 				<?php 
-				for($i=0; $i<count($report); $i++){
+				for($i=0; $i<count($title); $i++){
 					echo "<div class='clearing'>&nbsp;</div>\n";
-					echo "<div class='descriptive'>$report[$i]</div>";
-					echo "<div class='meta'>$subreport[$i]</div>";
+					echo "<div class='descriptive'>\n"
+					."<h3>$title[$i]</h3>\n";
+					if(isset($imageurl[$i])){
+						echo "\n<img class='aligncenter' id='photo' src='$imageurl[$i]' alt='$title[$i]' />\n";
+					}
+					echo $description[$i]
+					."\n</div>\n";
+					echo "<div class='meta'>$subreport[$i]</div>\n";
 				}
 				?>
 			</div>
@@ -178,7 +187,7 @@ foreach ($jsonIterator as $key => $val) {
     </div><!-- close .main-content -->
 <footer id="colophon" class="site-footer" role="contentinfo">
   <div class="row">
-    <a id="facebook"></a>     
+    <a id="facebook"></a>
     
     <nav role="navigation">
       <div class="half">
@@ -203,6 +212,18 @@ foreach ($jsonIterator as $key => $val) {
 </footer><!-- #colophon -->
 
 <!-- #page -->
-
+<script type="text/javascript">
+<!--
+//document.getElementById("photo").style.display  = "none";
+$(document).ready(function() {
+	jQuery('#photo').load(function(){;
+        alert(jQuery(this).height());
+        alert(jQuery(this).width());
+	});
+	
+	
+});
+// -->
+</script>
 </body>
 </html>
