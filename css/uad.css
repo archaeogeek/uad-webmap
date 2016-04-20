@@ -152,6 +152,13 @@ textarea {
 	display: block;
 	margin: 0 auto;
 }
+img.thumbphoto {
+	max-height: 100px !important; 
+	width: auto !important;
+	clear: both;
+	display: block;
+	margin: 0 auto;
+}
 
 /* Text meant only for screen readers */
 .screen-reader-text {
