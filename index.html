@@ -634,7 +634,7 @@
         })
       },
       onEachFeature: function (feature, layer) {          
-      var popupContent = '<table width="200px" height"300px"><tr><th scope="row">UAD Ref</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td><tr><td colspan="2"><img class="thumbphoto" src="' + String(feature.properties['Hyperlink']) + '" /></td></tr></tr><tr><td colspan="2">' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th><a target="moreinfo" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></th><td></td></tr></table>';
+      var popupContent = '<table width="200px" height"300px"><tr><th scope="row">UAD Ref</th><td>' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</td><tr><td colspan="2"><img class="thumbphoto" src="http://lancasteruad.oxfordarchaeology.com/uad/images/thumbs/' + String(feature.properties['Hyperlink']) + '" /></td></tr></tr><tr><td colspan="2">' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th><a target="moreinfo" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></th><td></td></tr></table>';
       layer.bindPopup(popupContent);
       }
     });

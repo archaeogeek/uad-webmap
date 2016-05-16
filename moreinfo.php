@@ -65,6 +65,7 @@ foreach ($jsonIterator as $key => $val) {
 			case 'Hyperlink':
 				$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$val' target='uadimage'>$val</a></span>\n";
 				//is it an image?
+        //http://lancasteruad.oxfordarchaeology.com/uad/images/thumbs/ needs to be prepended to $val
 				$imageurl[$i]=$val;
 				break;
 				
