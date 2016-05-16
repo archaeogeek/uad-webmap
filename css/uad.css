@@ -557,3 +557,9 @@ button[type=submit] {
 		margin-top: 15px;
 	}
 }
+
+/* ============================= custom leaflet styling ============================= */
+
+.leaflet-popup-content {
+height:auto !important;
+}
