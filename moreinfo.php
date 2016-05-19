@@ -63,10 +63,18 @@ foreach ($jsonIterator as $key => $val) {
 				$subreport[$i].="<span class='meta_item'><strong>Term:</strong> $val </span>\n";
 				break;
 			case 'Hyperlink':
-				$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$val' target='uadimage'>$val</a></span>\n";
-				//is it an image?
-        //http://lancasteruad.oxfordarchaeology.com/uad/images/thumbs/ needs to be prepended to $val
 				$imageurl[$i]=$val;
+				//is it an image?
+				$ext=strtolower(substr($val,-3));
+				if($ext=="jpg"){
+					$imageurl[$i]="http://lancasteruad.oxfordarchaeology.com/uad/images/".$val;
+				}
+				$ext=strtolower(substr($val,-4));
+				if($ext=="jpeg"){
+					$imageurl[$i]="http://lancasteruad.oxfordarchaeology.com/uad/images/".$val;
+				}
+				
+				$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$imageurl[$i]' target='uadimage'>$val</a></span>\n";
 				break;
 				
 			case 'Name':
@@ -171,6 +179,7 @@ foreach ($jsonIterator as $key => $val) {
 					."<h3>$title[$i]</h3>\n";
 					if(isset($imageurl[$i])){
 						echo "\n<img class='aligncenter' id='photo' src='$imageurl[$i]' alt='$title[$i]' />\n";
+						echo "<div id=\"cnkdata$i\"></div>\n";
 					}
 					echo $description[$i]
 					."\n</div>\n";
@@ -179,6 +188,7 @@ foreach ($jsonIterator as $key => $val) {
 				?>
 			</div>
 			<div class="clearing">&nbsp;</div>
+			
 			<p><strong>Please note:</strong> <em>Descriptions may appear more than once if the same monument has multiple periods or classifications.</em></p>
 			<div class="sub-nav">
 			<a href="#" onclick="javascript:window.close();" class="button">Close</a>
@@ -209,7 +219,7 @@ foreach ($jsonIterator as $key => $val) {
     </nav>
   </div>
   <div style="display: none;" class="scroll-to-top">&#094;</div><!-- .scroll-to-top -->
-  
+
 </footer><!-- #colophon -->
 
 <!-- #page -->
@@ -218,11 +228,13 @@ foreach ($jsonIterator as $key => $val) {
 //document.getElementById("photo").style.display  = "none";
 $(document).ready(function() {
 	jQuery('#photo').load(function(){;
-        alert(jQuery(this).height());
-        alert(jQuery(this).width());
+		var content_width=jQuery('.descriptive').width();
+		var image_width=jQuery(this).width();
+		//jQuery('#cnkdata').html('height '+jQuery(this).height()+' width '+jQuery(this).width()+' report width ='+content_width );
+		if(content_width==image_width){
+			jQuery('#cnkdata0').html('<a href="<?php echo $imageurl[0]; ?>" target="image">View image full size</a>');
+		}
 	});
-	
-	
 });
 // -->
 </script>
