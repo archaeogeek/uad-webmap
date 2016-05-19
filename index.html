@@ -633,9 +633,14 @@
           fillOpacity: 1.0
         })
       },
-      onEachFeature: function (feature, layer) {          
-      var popupContent = '<table width="200px"><tr><th scope="row" colspan="2">UAD Ref: ' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</th><tr><td><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td><td><img width="250" height="250" class="thumbphoto" src="http://lancasteruad.oxfordarchaeology.com/uad/images/thumbs/' + String(feature.properties['Hyperlink']) + '" /></td></tr></tr><tr><td colspan="2">' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th colspan="2"><a target="moreinfo" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></th></tr></table>';
-      layer.bindPopup(popupContent);
+      onEachFeature: function (feature, layer) {
+		  if(String(feature.properties['Hyperlink'])==""){
+			  var popupContent = '<table width="200px"><tr><th scope="row" colspan="2">UAD Ref: ' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</th></tr><tr><td colspan="2">' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th colspan="2"><a target="moreinfo" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></th></tr></table>';
+			  layer.bindPopup(popupContent);
+		  } else {
+			  var popupContent = '<table width="200px"><tr><th scope="row" colspan="2">UAD Ref: ' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '</th></tr><tr><td><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></td><td><img width="250" height="250" class="thumbphoto" src="http://lancasteruad.oxfordarchaeology.com/uad/images/thumbs/' + String(feature.properties['Hyperlink']) + '" /></td></tr><tr><td colspan="2">' + Autolinker.link(String(feature.properties['Name'])) + '</td></tr><tr><th colspan="2"><a target="moreinfo" href="moreinfo.php?table=human_readable_images&refno=' + Autolinker.link(String(feature.properties['UADReferenceNumber'])) + '">More Info</a></th></tr></table>';
+			  layer.bindPopup(popupContent);
+		  }
       }
     });
     layerOrder[layerOrder.length] = exp_ImagesJSON;
