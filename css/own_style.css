@@ -30,5 +30,5 @@ th {
 }
 
 .leaflet-popup-content {
-height:auto !important;
+	min-height: 800px !important;
 }
