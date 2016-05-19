@@ -73,8 +73,9 @@ foreach ($jsonIterator as $key => $val) {
 				if($ext=="jpeg"){
 					$imageurl[$i]="http://lancasteruad.oxfordarchaeology.com/uad/images/".$val;
 				}
-				
-				$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$imageurl[$i]' target='uadimage'>$val</a></span>\n";
+				if($val!=""){
+					$subreport[$i].="<span class='meta_item'><strong>Link:</strong> <a href='$imageurl[$i]' target='uadimage'>$val</a></span>\n";
+				}
 				break;
 				
 			case 'Name':
