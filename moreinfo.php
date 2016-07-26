@@ -97,6 +97,8 @@ foreach ($jsonIterator as $key => $val) {
 <head>
   <title>Lancaster UAD webmap</title>
   <meta charset="UTF-8">
+   <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab" rel="stylesheet"> 
   <!-- fontawesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <!-- bootstrap -->
