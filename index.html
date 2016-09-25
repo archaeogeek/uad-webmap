@@ -100,8 +100,10 @@
     var map = L.map('map', {
       zoomControl:false, maxZoom:19
     }).fitBounds([[54.0445042678,-2.81284059097],[54.0516320403,-2.79122468678]]);
+
+
     var additional_attrib = 'created w. <a href="https://github.com/geolicious/qgis2leaf" target ="moreinfo">qgis2leaf</a> by <a href="http://www.geolicious.de" target ="moreinfo">Geolicious</a> & contributors<br>';
-    var feature_group = new L.featureGroup([]);
+    //var //feature_group = new L.featureGroup([]);
     var raster_group = new L.LayerGroup([]);
     var prehistoric_group = new L.LayerGroup([]);
     var roman_group = new L.LayerGroup([]);
@@ -179,12 +181,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-   //feature_group.addLayer(exp_listedpolysJSON);
+   ////feature_group.addLayer(exp_listedpolysJSON);
 
     var unknownperiodpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:unknown-period_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetunknownperiodpolygonsJson';
     unknownperiodpolygonsURL=unknownperiodpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -218,12 +220,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_unknownperiodpolygonsJSON);
+    ////feature_group.addLayer(exp_unknownperiodpolygonsJSON);
 
     var postmedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:post-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetpostmedievalpolygonsJson';
     postmedievalpolygonsURL=postmedievalpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -257,12 +259,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_postmedievalpolygonsJSON);
+    ////feature_group.addLayer(exp_postmedievalpolygonsJSON);
     postmed_group.addLayer(exp_postmedievalpolygonsJSON);
     
     var postmedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:post-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetpostmedievalpointsJson';
@@ -296,12 +298,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_postmedievalpointsJSON);
+    ////feature_group.addLayer(exp_postmedievalpointsJSON);
     postmed_group.addLayer(exp_postmedievalpointsJSON);
 
     var latemedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:late-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetlatemedievalpolygonsJson';
@@ -336,12 +338,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-   // feature_group.addLayer(exp_latemedievalpolygonsJSON);
+   // //feature_group.addLayer(exp_latemedievalpolygonsJSON);
    latemed_group.addLayer(exp_latemedievalpolygonsJSON);
 
     var latemedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:late-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetlatemedievalpointsJson';
@@ -375,12 +377,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_latemedievalpointsJSON);
+    ////feature_group.addLayer(exp_latemedievalpointsJSON);
     latemed_group.addLayer(exp_latemedievalpointsJSON);
 
     var earlymedievalpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:early-medieval_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetearlymedievalpolygonsJson';
@@ -415,12 +417,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_earlymedievalpolygonsJSON);
+    ////feature_group.addLayer(exp_earlymedievalpolygonsJSON);
     earlymed_group.addLayer(exp_earlymedievalpolygonsJSON);
 
     var earlymedievalpointsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:early-medieval-points&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetearlymedievalpointsJson';
@@ -454,12 +456,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-   // feature_group.addLayer(exp_earlymedievalpointsJSON);
+   // //feature_group.addLayer(exp_earlymedievalpointsJSON);
    earlymed_group.addLayer(exp_earlymedievalpointsJSON);
 
     var romanpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:roman_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetromanpolygonsJson';
@@ -494,12 +496,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-   // feature_group.addLayer(exp_romanpolygonsJSON);
+   ////feature_group.addLayer(exp_romanpolygonsJSON);
    roman_group.addLayer(exp_romanpolygonsJSON);
 
     var romanmonumentsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:roman_monuments&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetromanmonumentsJson';
@@ -533,13 +535,16 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_romanmonumentsJSON);
+    ////feature_group.addLayer(exp_romanmonumentsJSON);
+
     roman_group.addLayer(exp_romanmonumentsJSON);
+    ////feature_group.addLayer(roman_group);
+
 
     var prehistoricpolygonsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:prehistoric_polygons&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetprehistoricpolygonsJson';
     prehistoricpolygonsURL=prehistoricpolygonsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -573,12 +578,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_prehistoricpolygonsJSON);
+    ////feature_group.addLayer(exp_prehistoricpolygonsJSON);
     prehistoric_group.addLayer(exp_prehistoricpolygonsJSON);
 
     var PrehistoricURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:Prehistoric&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetPrehistoricJson';
@@ -612,12 +617,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_PrehistoricJSON);
+    ////feature_group.addLayer(exp_PrehistoricJSON);
     prehistoric_group.addLayer(exp_PrehistoricJSON);
 
     var ImagesURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:human_readable_images&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetImagesJson';
@@ -651,12 +656,12 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-    //feature_group.addLayer(exp_ImagesJSON);
+    ////feature_group.addLayer(exp_ImagesJSON);
 
     var UADEventsURL='http://lancasteruadgeo.oxfordarchaeology.com/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=uad:human_readable_events&SRSNAME=EPSG:27700&outputFormat=text%2Fjavascript&format_options=callback%3AgetUADEventsJson';
     UADEventsURL=UADEventsURL.replace(/SRSNAME\=EPSG\:\d+/, 'SRSNAME=EPSG:4326');
@@ -689,29 +694,29 @@
           }
         });
         for (index = 0; index < layerOrder.length; index++) {
-          feature_group.removeLayer(layerOrder[index]);feature_group.addLayer(layerOrder[index]);
+          //feature_group.removeLayer(layerOrder[index]);//feature_group.addLayer(layerOrder[index]);
         }
       }
     });
     //add comment sign to hide this layer on the map in the initial view.
-   // feature_group.addLayer(exp_UADEventsJSON);
+   // //feature_group.addLayer(exp_UADEventsJSON);
 
-    //feature_group.addTo(map);
+
     
   var baseMaps = {
     'Base Map': basemap_0
   };
 
   var overLays = {
-  	"Digs and Surveys": exp_UADEventsJSON,
-  	"Paintings and Drawings": exp_ImagesJSON,
-  	"Prehistoric Monuments":prehistoric_group,
-  	"Roman Monuments": roman_group,
-  	"Early Medieval Monuments": earlymed_group,
-  	"Late Medieval Monuments":  latemed_group,
-  	"Post-Medieval Monuments": postmed_group,
-  	"Monuments of unknown period": exp_unknownperiodpolygonsJSON,
-  	"Listed Building Outlines": exp_listedpolysJSON,
+  	'<img src="legend/uadevents.png" /> Digs and Surveys': exp_UADEventsJSON,
+  	'<img src="legend/uadimages.png" /> Paintings and Drawings': exp_ImagesJSON,
+  	'<img src="legend/uadprehistoric.png" /> Prehistoric Monuments':prehistoric_group,
+  	'<img src="legend/uadroman.png" /> Roman Monuments': roman_group,
+  	'<img src="legend/uadearlymedieval.png" /> Early Medieval Monuments': earlymed_group,
+  	'<img src="legend/uadlatemedieval.png" /> Late Medieval Monuments':  latemed_group,
+  	'<img src="legend/uadpostmedieval.png" /> Post-Medieval Monuments': postmed_group,
+  	'<img src="legend/uadunknown.png" /> Monuments of unknown period': exp_unknownperiodpolygonsJSON,
+  	'<img src="legend/uadlistedpolys.png" /> Listed Building Outlines': exp_listedpolysJSON,
   	"Ordnance Survey First Edition 25inch Map": overlay_OSFirstEdition25inch,
   	"Mackreth's Map of 1778": overlay_Mackreth1778,
   	"Docton's Map of 1684": overlay_Docton1684,
@@ -719,7 +724,7 @@
   	"Baines Map of 1824": overlay_Baines1824
   };
 
-    L.control.layers(baseMaps,overLays,{collapsed:true}).addTo(map);
+    L.control.layers(baseMaps,overLays,{collapsed:false}).addTo(map);
     L.control.scale({options: {position: 'bottomleft',maxWidth: 100,metric: true,imperial: false,updateWhenIdle: false}}).addTo(map);
 
   map.on('overlayadd', function(e) {
@@ -730,24 +735,15 @@
   	search_group.addLayer(e.layer);
   });
 
+   roman_group.addTo(map);
+   exp_UADEventsJSON.addTo(map);
+
 
 
     L.control.search({
         layer: search_group,
         initial: false,
         propertyName: 'Name'
-        //filterData: function(text, records) {
-        //    var jsons = fuse.search(text),
-        //      ret = {}, key;
-            
-        //    for(var i in jsons) {
-        //      key = jsons[i].properties.name;
-        //      ret[ key ]= records[key];
-        //    }
-
-        //    console.log(jsons,ret);
-        //    return ret;
-        //  }
         })
         .on('search_locationfound', function(e) {
           e.layer.openPopup();
