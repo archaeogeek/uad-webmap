@@ -28,7 +28,3 @@ th {
 .leaflet-container {
 	background: #fff;
 }
-
-.leaflet-popup-content {
-height:auto !important;
-}
